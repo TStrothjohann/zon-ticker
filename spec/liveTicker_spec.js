@@ -6,18 +6,38 @@ var testData = require("./helpers/testData/test_data.js");
 var TestData = new testData();
 var testTeamData = TestData.team;
 var testLiveData = TestData.live;
+var teamHash = convertTeamData(testTeamData);
 
+function convertTeamData(data){
+  var teamHash = {};
+  for (var i = 0; i < data.teams.length; i++) {
+    teamHash[data.teams[i].id] = data.teams[i].nameShort 
+  }
+  return teamHash;
+}
 
 describe("liveTicker", function() {
   var ticker;
 
   beforeEach(function() {
-    ticker = new Ticker(testLiveData, testTeamData);
+    ticker = new Ticker(testLiveData, teamHash);
   });
 
   it("should take and provide team and dpa data", function() {
-    expect(ticker.teamData.teams[0].id).toEqual("t156");
-    expect(ticker.liveData.round).toEqual("35");
+    expect(ticker.teamHash["t117"]).toEqual("Nordirland");
+    expect(ticker.liveData.round).toEqual("1");
+  });
+
+  it("it should know which games are planned", function(){
+    ticker.sortGames();
+    expect(ticker.data.games.length).toBeGreaterThan(0);
+  });
+
+  it("should show which teams are playing", function() {
+    ticker.sortGames();
+    ticker.teamNames();
+    expect(ticker.data.games[0].teamAway.teamId).toEqual("Rumänien");
+    expect(ticker.data.games[0].teamHome.teamId).toEqual("Frankreich");
   });
 
   describe("Server", function() {
@@ -43,8 +63,9 @@ describe("liveTicker", function() {
 });
 
 //////ToDo:
-// Produce liveData-Object
-// serve liveData-Object
+// Server crawls live- and teamData
+// App produces tickerData-Object
+// Server serves tickerData-Object
 
 
 ///// States ////
@@ -58,7 +79,7 @@ describe("liveTicker", function() {
 // it should show when a game was revoked, withdrawn, canceled, discarded or postponed
 
 ///// Features ////
-// it should show which teams are playing
+// 
 // it should update when a goal has happened
 // it should link to live-tickers if there is one 
 // it should show the current time of live games
@@ -80,3 +101,5 @@ describe("liveTicker", function() {
 // it should show the phase/day of the tournament
 // it should handle 0-3 live games
 
+
+//Does it have to handle placeholders?
