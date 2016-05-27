@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="../css/em-module.css">
+</head>
+<body>
+
+  <div id="em-ticker" class="em-hp-live__container">
+    <div class="em-hp-live__module-header">
+      <h3 class="em-hp-live__module-headline">
+        UEFA EURO 2016 - Runde 
+      </h3>
+      <span class="em-hp-live__module-timestamp">
+        {{updated}}
+      </span>
+    </div>
+    <span id="round"></span>
+    <div class="em-hp-live__section {{games.liveGames[0].status}}">
+      <span>{{games.liveGames[0].teamHome}} gegen {{games.liveGames[0].teamAway}}</span>
+    </div>
+    <div class="em-hp-live__section {{games.upcomingGames[0].status}}">
+      <span>{{games.upcomingGames[0].teamHome}} gegen {{games.upcomingGames[0].teamAway}}</span>
+    </div>
+    <div class="em-hp-live__section">
+      live 3
+    </div>
+  </div>
+
+  <script type="text/javascript" src="../js/em-hp-module.js"></script>
+</body>
+</html>

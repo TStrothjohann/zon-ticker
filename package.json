@@ -1,0 +1,20 @@
+{
+  "name": "em2016",
+  "version": "1.0.0",
+  "description": "ZON em tool",
+  "main": "main.js",
+  "scripts": {
+    "test": "jasmine",
+    "start": "node ./app/server.js"
+  },
+  "author": "Thomas Strothjohann",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "node-xml": "^1.0.2",
+    "request": "^2.72.0"
+  },
+  "devDependencies": {
+    "jasmine": "^2.4.1"
+  }
+}
