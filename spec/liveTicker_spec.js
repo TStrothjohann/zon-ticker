@@ -40,6 +40,20 @@ describe("liveTicker", function() {
     expect(ticker.data.games[0].teamHome.teamId).toEqual("Frankreich");
   });
 
+  describe("Game states", function() {
+    it("it should know when a game is PRE-MATCH", function() {
+      ticker.sortGames();
+      expect(ticker.data.games[0].status).toEqual("PRE-MATCH");
+    });
+
+    it("it should sort LIVE games first", function() {
+      testLiveData.fixture[3].status = "LIVE";
+      ticker = new Ticker(testLiveData, teamHash);
+      ticker.sortGames();
+      expect(ticker.data.games[0].status).toEqual("LIVE");
+    });
+  });
+
   describe("Server", function() {
     describe("GET /", function() {
       it("returns status code 200", function(done) {
@@ -63,13 +77,12 @@ describe("liveTicker", function() {
 });
 
 //////ToDo:
-// Server crawls live- and teamData
+// Server crawls live- and teamData - mocked with test data in test
 // App produces tickerData-Object
 // Server serves tickerData-Object
 
 
 ///// States ////
-// it should know when a game is upcoming and it's date (PRE-MATCH)
 // it should know when a game is live (LIVE)
 // it should know when a game is in half-time (HALF-TIME)
 // it should know when a game is in half-time-extratime (HALF-EXTRATIME)
@@ -93,6 +106,7 @@ describe("liveTicker", function() {
 // It serves a json file no matter what traffic comes
 // It doesn't block any page load
 // It emit events for ad Reloads and tracking purposes
+
 
 ////// Design /////
 // it should show the teams flags
