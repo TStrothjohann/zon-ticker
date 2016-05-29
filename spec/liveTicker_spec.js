@@ -52,6 +52,20 @@ describe("liveTicker", function() {
       ticker.sortGames();
       expect(ticker.data.games[0].status).toEqual("LIVE");
     });
+
+    it("it should handle other lively states", function() {
+      testLiveData.fixture[3].status = "LIVE";
+      testLiveData.fixture[7].status = "HALF-TIME";
+      testLiveData.fixture[9].status = "HALF-EXTRATIME";
+      testLiveData.fixture[10].status = "PENALTY-SHOOTOUT";
+      
+      ticker = new Ticker(testLiveData, teamHash);
+      ticker.sortGames();
+      expect(ticker.data.games[0].status).toEqual("LIVE");
+      expect(ticker.data.games[1].status).toEqual("HALF-TIME");
+      expect(ticker.data.games[2].status).toEqual("HALF-EXTRATIME");
+      expect(ticker.data.games[3].status).toEqual("PENALTY-SHOOTOUT");
+    });
   });
 
   describe("Server", function() {

@@ -2,6 +2,12 @@ function Ticker(liveData, teamHash){
   this.liveData = liveData;
   this.teamHash = teamHash;
   this.data = {};
+  this.liveStates = {
+    "LIVE": "LIVE",
+    "HALF-TIME": "LIVE",
+    "HALF-EXTRATIME": "LIVE",
+    "PENALTY-SHOOTOUT": "LIVE"      
+  };
 }
 
 Ticker.prototype.sortGames = function() {
@@ -9,26 +15,22 @@ Ticker.prototype.sortGames = function() {
 
   var orderedGames = [];
   var liveGames = [];
+  var nonLiveGames = [];
+
   for (var i = 0; i < this.data.games.length; i++) {
-    if(this.data.games[i].status === "LIVE"){
-      liveGames = this.data.games.splice(i,1);
+    if( this.isLive(this.data.games[i].status)){
+      liveGames.push(this.data.games[i]);
+    }else{
+      nonLiveGames.push(this.data.games[i]);
     }
   }
-  
-  this.data.games.sort(function(a,b){
+
+  nonLiveGames.sort(function(a,b){
     return new Date(a.date) - new Date(b.date);
   });
 
-  for (var i = 0; i < liveGames.length; i++) {
-    orderedGames.push(liveGames[i]);
-  }
-
-  for (var i = 0; i < this.data.games.length; i++) {
-    orderedGames.push(this.data.games[i])
-  }
-
-  this.data.games = orderedGames;
-
+  orderedGames = orderedGames.concat(liveGames);
+  this.data.games = orderedGames.concat(nonLiveGames);
 };
 
 Ticker.prototype.teamNames = function() {
@@ -37,5 +39,13 @@ Ticker.prototype.teamNames = function() {
     this.data.games[i].teamAway.teamId = this.teamHash[this.data.games[i].teamAway.teamId]
   }
 };
+
+Ticker.prototype.isLive = function(status) {
+  if(this.liveStates[status]){
+    return true;
+  }else{
+    return false;
+  }
+}
 
 module.exports = Ticker;
