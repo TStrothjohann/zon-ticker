@@ -77,11 +77,11 @@ describe("liveTicker", function() {
         });
       });
 
-      it("returns json", function(done) {
-        request.get(base_url, function(error, response, body) {
-          var expectation = JSON.parse('{"hello": "world"}');
+      it("returns tickerData json", function(done) {
+        var apiPath = base_url + "ticker-data";
+        request.get(apiPath, function(error, response, body) {
           var parsedBody = JSON.parse(body);
-          expect(parsedBody).toEqual(expectation);
+          expect(parsedBody.games[0].eventId).toEqual("838507");
           done();
         });
       });

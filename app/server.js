@@ -6,7 +6,7 @@ var TestData = new testData();
 var testTeamData = TestData.team;
 var testLiveData = TestData.live;
 var teamHash = convertTeamData(testTeamData);
-var ticker = new Ticker(testLiveData, teamHash);
+var ticker;
 
 function convertTeamData(data){
   var teamHash = {};
@@ -24,8 +24,11 @@ app.get("/", function(req, res) {
 });
 
 
-app.get("/liveData", function(req, res) {
-  var data = ticker.liveData;
+app.get("/ticker-data", function(req, res) {
+  ticker = new Ticker(testLiveData, teamHash);
+  ticker.sortGames();
+  ticker.teamNames();
+  var data = ticker.data;
   res.json(data);
 });
 
