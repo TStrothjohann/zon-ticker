@@ -11,12 +11,13 @@ function Ticker(liveData, teamHash){
 }
 
 Ticker.prototype.sortGamesAndReplaceNames = function(response){
-  console.log("sortGamesAndReplaceNames - has been called");
   var self = this;
   var callback = function(){
     self.teamNames(callbackNames);
   }
   var callbackNames = function(){
+    self.data.updated = Date.now();
+    console.log(self.data.updated);
     response.json(self.data);
   }
   this.sortGames(callback);

@@ -86,6 +86,16 @@ describe("liveTicker", function() {
           done();
         });
       });
+
+      it("has an last updated timestamp", function(done){
+        var apiPath = base_url + "ticker-data";
+        request.get(apiPath, function(error, response, body) {
+          var parsedBody = JSON.parse(body);
+          var nowPlus = Date.now() + 20000;
+          expect( new Date(parsedBody.updated) ).toBeLessThan(nowPlus);
+          done();
+        });
+      });
     });
   });
 

@@ -1,5 +1,5 @@
 var HTTPrequest = new XMLHttpRequest();
-HTTPrequest.open('GET', 'http://52.58.6.8/zon/liveData.json', true);
+HTTPrequest.open('GET', 'http://localhost:3000/ticker-data', true);
 var data = {};
 var markup = document.getElementById('em-ticker').innerHTML;
 

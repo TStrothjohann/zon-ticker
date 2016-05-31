@@ -16,8 +16,6 @@ function convertTeamData(data){
   return teamHash;
 }
 
-
-
 app.get("/", function(req, res) {
   var data = {hello: "world"};
   res.json(data);
@@ -25,11 +23,6 @@ app.get("/", function(req, res) {
 
 
 app.get("/ticker-data", function(req, res) {
-  ticker = new Ticker(testLiveData, teamHash);
-  ticker.sortGamesAndReplaceNames(res);
-});
-
-app.get("/test", function(req, res){
   ticker = new Ticker(testLiveData, teamHash);
   ticker.sortGamesAndReplaceNames(res);
 });
