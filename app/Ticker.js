@@ -10,7 +10,19 @@ function Ticker(liveData, teamHash){
   };
 }
 
-Ticker.prototype.sortGames = function() {
+Ticker.prototype.sortGamesAndReplaceNames = function(response){
+  console.log("sortGamesAndReplaceNames - has been called");
+  var self = this;
+  var callback = function(){
+    self.teamNames(callbackNames);
+  }
+  var callbackNames = function(){
+    response.json(self.data);
+  }
+  this.sortGames(callback);
+};
+
+Ticker.prototype.sortGames = function(callback) {
   this.data.games = this.liveData.fixture;
 
   var orderedGames = [];
@@ -31,12 +43,18 @@ Ticker.prototype.sortGames = function() {
 
   orderedGames = orderedGames.concat(liveGames);
   this.data.games = orderedGames.concat(nonLiveGames);
+  if(callback){
+    callback();
+  }
 };
 
-Ticker.prototype.teamNames = function() {
+Ticker.prototype.teamNames = function(callback) {
   for (var i = 0; i < this.data.games.length; i++) {
-    this.data.games[i].teamHome.teamId = this.teamHash[this.data.games[i].teamHome.teamId]
-    this.data.games[i].teamAway.teamId = this.teamHash[this.data.games[i].teamAway.teamId]
+    this.data.games[i].teamHome.teamName = this.teamHash[this.data.games[i].teamHome.teamId]
+    this.data.games[i].teamAway.teamName = this.teamHash[this.data.games[i].teamAway.teamId]
+  }
+  if(callback){
+    callback();
   }
 };
 

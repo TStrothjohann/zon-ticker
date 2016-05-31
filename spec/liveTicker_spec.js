@@ -36,8 +36,8 @@ describe("liveTicker", function() {
   it("should show which teams are playing", function() {
     ticker.sortGames();
     ticker.teamNames();
-    expect(ticker.data.games[0].teamAway.teamId).toEqual("Rumänien");
-    expect(ticker.data.games[0].teamHome.teamId).toEqual("Frankreich");
+    expect(ticker.data.games[0].teamAway.teamName).toEqual("Rumänien");
+    expect(ticker.data.games[0].teamHome.teamName).toEqual("Frankreich");
   });
 
   describe("Game states", function() {
@@ -82,6 +82,7 @@ describe("liveTicker", function() {
         request.get(apiPath, function(error, response, body) {
           var parsedBody = JSON.parse(body);
           expect(parsedBody.games[0].eventId).toEqual("838507");
+          expect(parsedBody.games[0].teamHome.teamName).toEqual("Frankreich");
           done();
         });
       });

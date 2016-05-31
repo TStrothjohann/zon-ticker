@@ -26,10 +26,12 @@ app.get("/", function(req, res) {
 
 app.get("/ticker-data", function(req, res) {
   ticker = new Ticker(testLiveData, teamHash);
-  ticker.sortGames();
-  ticker.teamNames();
-  var data = ticker.data;
-  res.json(data);
+  ticker.sortGamesAndReplaceNames(res);
+});
+
+app.get("/test", function(req, res){
+  ticker = new Ticker(testLiveData, teamHash);
+  ticker.sortGamesAndReplaceNames(res);
 });
 
 app.listen(3000);
