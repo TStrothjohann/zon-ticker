@@ -2,6 +2,7 @@ function Ticker(liveData, teamHash){
   this.liveData = liveData;
   this.teamHash = teamHash;
   this.data = {};
+  this.data.link = "http://www.zeit.de/thema/europameisterschaft";
   this.liveStates = {
     "LIVE": "LIVE",
     "HALF-TIME": "LIVE",
@@ -17,7 +18,6 @@ Ticker.prototype.sortGamesAndReplaceNames = function(response){
   }
   var callbackNames = function(){
     self.data.updated = Date.now();
-    console.log(self.data.updated);
     response.json(self.data);
   }
   this.sortGames(callback);
@@ -65,6 +65,10 @@ Ticker.prototype.isLive = function(status) {
   }else{
     return false;
   }
+}
+
+Ticker.prototype.moreLink = function(link) {
+  if(link) this.data.link = link;
 }
 
 module.exports = Ticker;

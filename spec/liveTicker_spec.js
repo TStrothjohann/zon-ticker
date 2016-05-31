@@ -96,6 +96,16 @@ describe("liveTicker", function() {
           done();
         });
       });
+
+      it("serves a more link", function(done){
+        var apiPath = base_url + "ticker-data";
+        request.get(apiPath, function(error, response, body) {
+          var parsedBody = JSON.parse(body);
+          expect( parsedBody.link ).toEqual("http://www.zeit.de/thema/europameisterschaft");
+          done();
+        });
+      });
+
     });
   });
 

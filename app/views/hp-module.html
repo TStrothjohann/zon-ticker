@@ -13,18 +13,18 @@
         UEFA EURO 2016 - Runde 
       </h3>
       <span class="em-hp-live__module-timestamp">
-        {{updated}}
+        <a href="{{link}}">mehr ▸</a>
       </span>
     </div>
     <span id="round"></span>
-    <div class="em-hp-live__section {{games.liveGames[0].status}}">
-      <span>{{games.liveGames[0].teamHome}} gegen {{games.liveGames[0].teamAway}}</span>
+    <div class="em-hp-live__section {{games[0].status}}">
+      <span>{{games[0].teamHome.teamName}} gegen {{games[0].teamAway.teamName}}</span>
     </div>
-    <div class="em-hp-live__section {{games.upcomingGames[0].status}}">
-      <span>{{games.upcomingGames[0].teamHome}} gegen {{games.upcomingGames[0].teamAway}}</span>
+    <div class="em-hp-live__section {{games[1].status}}">
+      <span>{{games[1].teamHome.teamName}} gegen {{games[1].teamAway.teamName}}</span>
     </div>
-    <div class="em-hp-live__section">
-      live 3
+    <div class="em-hp-live__section {{games[2].status}}">
+      <span>{{games[2].teamHome.teamName}} gegen {{games[2].teamAway.teamName}}</span>
     </div>
   </div>
 
