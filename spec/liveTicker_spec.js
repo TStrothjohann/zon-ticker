@@ -11,7 +11,10 @@ var teamHash = convertTeamData(testTeamData);
 function convertTeamData(data){
   var teamHash = {};
   for (var i = 0; i < data.teams.length; i++) {
-    teamHash[data.teams[i].id] = data.teams[i].nameShort 
+    teamHash[data.teams[i].id] = {
+      "name" : data.teams[i].nameShort,
+      "countrycode": data.teams[i].letterCode
+    }
   }
   return teamHash;
 }
@@ -24,7 +27,7 @@ describe("liveTicker", function() {
   });
 
   it("should take and provide team and dpa data", function() {
-    expect(ticker.teamHash["t117"]).toEqual("Nordirland");
+    expect(ticker.teamHash["t117"]).toEqual({ name: 'Nordirland', countrycode: 'NIR' });
     expect(ticker.liveData.round).toEqual("1");
   });
 
@@ -105,6 +108,24 @@ describe("liveTicker", function() {
           done();
         });
       });
+
+      it("serves an image link for every team", function(done){
+        var apiPath = base_url + "ticker-data";
+        request.get(apiPath, function(error, response, body) {
+          var parsedBody = JSON.parse(body);
+          expect( parsedBody.games[0].teamHome.flag ).toEqual("flag-icon-fr");
+          done();
+        });
+      });
+
+      it("also serves three letter country codes", function(done){
+        var apiPath = base_url + "ticker-data";
+        request.get(apiPath, function(error, response, body) {
+          var parsedBody = JSON.parse(body);
+          expect( parsedBody.games[0].teamHome.countrycode ).toEqual("FRA");
+          done();
+        });        
+      })
 
     });
   });

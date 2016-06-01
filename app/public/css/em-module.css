@@ -26,7 +26,27 @@
   font-family:TabletGothic,Helvetica Neue,Helvetica,Arial,FreeSans,sans-serif;
   line-height:1.4rem;
   text-transform: uppercase;
-  text-align: center;  
+  text-align: left;
+  display: inline;    
+}
+
+.em-hp-live__module-more-link, 
+.em-hp-live__module-more-link:visited,
+.em-hp-live__module-more-link > a{
+  font-family:TabletGothic,Helvetica Neue,Helvetica,Arial,FreeSans,sans-serif;
+  position: absolute;
+  padding-right: 1rem;
+  right: 0px;
+  display: inline;
+  color: rgb(68, 68, 68);
+  text-decoration: none;
+  font-size: .875rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+}
+
+.em-hp-live__module-more-link:after {
+  content: "›";
 }
 
 @media screen and (min-width:32.5em){

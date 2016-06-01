@@ -11,16 +11,22 @@ var ticker;
 function convertTeamData(data){
   var teamHash = {};
   for (var i = 0; i < data.teams.length; i++) {
-    teamHash[data.teams[i].id] = data.teams[i].nameShort 
+    teamHash[data.teams[i].id] = {
+      "name" : data.teams[i].nameShort,
+      "countrycode": data.teams[i].letterCode
+    }
   }
   return teamHash;
 }
+
+app.use(express.static('app/public'));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
 
 app.get("/", function(req, res) {
   var data = {hello: "world"};

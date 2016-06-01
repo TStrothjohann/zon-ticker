@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title></title>
-  <link rel="stylesheet" type="text/css" href="../css/em-module.css">
+  <link rel="stylesheet" type="text/css" href="../public/css/em-module.css">
+  <link rel="stylesheet" type="text/css" href="../public/css/flag-icon-min.css">
 </head>
 <body>
 
@@ -12,22 +13,28 @@
       <h3 class="em-hp-live__module-headline">
         UEFA EURO 2016 - Runde 
       </h3>
-      <span class="em-hp-live__module-timestamp">
+      <span class="em-hp-live__module-more-link">
         <a href="{{link}}">mehr ▸</a>
       </span>
     </div>
     <span id="round"></span>
     <div class="em-hp-live__section {{games[0].status}}">
+      <span class="flag-icon {{games[0].teamHome.flag}}"></span>
       <span>{{games[0].teamHome.teamName}} gegen {{games[0].teamAway.teamName}}</span>
+      <span class="flag-icon {{games[0].teamAway.flag}}"></span>
     </div>
     <div class="em-hp-live__section {{games[1].status}}">
+      <span class="flag-icon {{games[1].teamHome.flag}}"></span>
       <span>{{games[1].teamHome.teamName}} gegen {{games[1].teamAway.teamName}}</span>
+      <span class="flag-icon {{games[1].teamAway.flag}}"></span>
     </div>
     <div class="em-hp-live__section {{games[2].status}}">
+      <span class="flag-icon {{games[2].teamHome.flag}}"></span>
       <span>{{games[2].teamHome.teamName}} gegen {{games[2].teamAway.teamName}}</span>
+      <span class="flag-icon {{games[2].teamAway.flag}}"></span>
     </div>
   </div>
 
-  <script type="text/javascript" src="../js/em-hp-module.js"></script>
+  <script type="text/javascript" src="../public/js/em-hp-module.js"></script>
 </body>
 </html>
