@@ -2,6 +2,7 @@ var request = require("request");
 var fileSystem = require("fs");
 var base_url = "http://localhost:3000/"
 var Ticker = require("../app/Ticker.js");
+var LiveData = require("../app/LiveData.js");
 var testData = require("./helpers/testData/test_data.js");
 var TestData = new testData();
 var testTeamData = TestData.team;
@@ -172,7 +173,18 @@ describe("liveTicker", function() {
         expect( parsedBody.games[0].round ).not.toBe(undefined);
         done();
       });
-    });    
+    });
+    
+    it("serves team data", function(){
+      var teamDataURL = "http://live0.zeit.de/fussball_em/feed/s2016/config/de/dpa/teams.json";
+      var callback = function(data){
+        expect(data.teams[0].id).not.toBe(undefined);
+        expect(data.teams[0].nameShort).not.toBe(undefined);
+        expect(data.teams[0].letterCode).not.toBe(undefined);
+        expect(data.teams[0].twitter).not.toBe(undefined);
+      };
+      var teamData = new LiveData(request, teamDataURL, callback);
+    });
   })
 
 });

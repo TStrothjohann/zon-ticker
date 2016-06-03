@@ -1,5 +1,6 @@
 function LiveData(request, url, callback){
   this.liveData = {};
+  this.teamData = {};
   this.refreshLiveData(request, url, callback);
 }
 
