@@ -1,3 +1,5 @@
+var dateFormat = require('dateformat');
+
 function Ticker(liveData, teamHash){
   this.liveData = liveData;
   this.teamHash = teamHash;
@@ -9,9 +11,20 @@ function Ticker(liveData, teamHash){
     "HALF-EXTRATIME": "LIVE",
     "PENALTY-SHOOTOUT": "LIVE"      
   };
+  this.offStates = {
+    "WITHDRAWN": "abgesetzt",
+    "POSTPONED": "abgesagt",
+    "CANCELED": "ausgefallen",
+    "DISCARDED": "gestrichen"
+  };
+  this.upcomingStates = {
+    "REVOKED": "verlegt, ",
+    "PRE-MATCH": ""
+  };
 }
 
 Ticker.prototype.sortGamesAndReplaceNames = function(response){
+
   var self = this;
   var callback = function(){
     self.teamNames(callbackNames);
@@ -21,8 +34,12 @@ Ticker.prototype.sortGamesAndReplaceNames = function(response){
     self.addFlags(callbackFlags);
   }
   var callbackFlags = function(){
+    self.statusText(callbackStatus);
+  }
+  var callbackStatus = function(){
     response.json(self.data);
   }
+
   this.sortGames(callback);
 };
 
@@ -113,6 +130,24 @@ Ticker.prototype.addFlags = function(callback){
   if(callback){
     callback();
   }
+};
+
+Ticker.prototype.statusText = function(callback){
+  var dateOptions = {month: "long", day: "numeric", hour: "2-digit", minute: "2-digit"};
+  
+  for (var i = 0; i < this.data.games.length; i++) {
+    var status = this.data.games[i].status;
+    var date = new Date(this.data.games[i].date);
+    var dateString = dateFormat(date, "dd.mm, HH:MM");
+    if( date.toDateString() === new Date().toDateString() ){
+      dateString = "heute, " + dateFormat(date, "HH:MM");
+    } 
+    
+     this.data.games[i].statusText = dateString;
+  }  
+  if(callback){
+    callback()
+  };
 };
 
 module.exports = Ticker;

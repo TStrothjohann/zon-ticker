@@ -21,9 +21,22 @@ function convertTeamData(data){
 
 describe("liveTicker", function() {
   var ticker;
+  var mockResponse = null;
+  var mockJsonData = {};
 
   beforeEach(function() {
     ticker = new Ticker(testLiveData, teamHash);
+  });
+
+
+  beforeEach(function(){
+    mockResponse = {
+      json: function(data){
+        mockJsonData = data;
+      }
+    };
+
+    spyOn(mockResponse, 'json').and.callThrough();
   });
 
   it("should take and provide team and dpa data", function() {
@@ -69,6 +82,15 @@ describe("liveTicker", function() {
       expect(ticker.data.games[2].status).toEqual("HALF-EXTRATIME");
       expect(ticker.data.games[3].status).toEqual("PENALTY-SHOOTOUT");
     });
+  });
+
+  it("it writes heute if game is going to be heute", function() {
+    testLiveData.fixture[3].status = "PRE-MATCH";
+    testLiveData.fixture[3].date = Date.now() + 60*60*1000;
+    ticker = new Ticker(testLiveData, teamHash);
+    ticker.sortGamesAndReplaceNames(mockResponse);
+    expect(mockResponse.json).toHaveBeenCalled();
+    expect(mockJsonData.games[3].statusText).toContain('heute, ');
   });
 
   describe("Server", function() {
@@ -125,7 +147,16 @@ describe("liveTicker", function() {
           expect( parsedBody.games[0].teamHome.countrycode ).toEqual("FRA");
           done();
         });        
-      })
+      });
+
+      it("serves status names", function(done){
+        var apiPath = base_url + "ticker-data";
+        request.get(apiPath, function(error, response, body) {
+          var parsedBody = JSON.parse(body);
+          expect( parsedBody.games[0].statusText ).toEqual( "10.06, 21:00" );
+          done();
+        });
+      });
 
     });
   });

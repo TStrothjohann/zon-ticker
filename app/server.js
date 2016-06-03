@@ -35,6 +35,7 @@ app.get("/", function(req, res) {
 
 
 app.get("/ticker-data", function(req, res) {
+  
   ticker = new Ticker(testLiveData, teamHash);
   ticker.sortGamesAndReplaceNames(res);
 });
