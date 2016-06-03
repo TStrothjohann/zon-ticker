@@ -161,6 +161,20 @@ describe("liveTicker", function() {
     });
   });
 
+  describe("get real data", function(){
+    it("serves live data", function(done){
+      var apiPath = base_url + "live-data";
+      request.get(apiPath, function(error, response, body) {
+        var parsedBody = JSON.parse(body);
+        expect( parsedBody.games[0].statusText ).not.toBe(undefined);
+        expect( parsedBody.games[0].date ).not.toBe(undefined);
+        expect( parsedBody.games[0].status ).not.toBe(undefined);
+        expect( parsedBody.games[0].round ).not.toBe(undefined);
+        done();
+      });
+    });    
+  })
+
 });
 
 //////ToDo:

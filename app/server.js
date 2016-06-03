@@ -1,11 +1,15 @@
 var express = require('express');
 var app = express();
+var request = require("request");
+var fs = require("fs");
 var Ticker = require("../app/Ticker.js");
+var LiveData = require("../app/LiveData.js");
 var testData = require("../spec/helpers/testData/test_data.js");
 var TestData = new testData();
 var testTeamData = TestData.team;
 var testLiveData = TestData.live;
 var teamHash = convertTeamData(testTeamData);
+var liveDataUrl = "http://live0.zeit.de/fussball_em/feed/s2016/md3/dpa/onl1.json";
 var ticker;
 
 function convertTeamData(data){
@@ -38,6 +42,14 @@ app.get("/ticker-data", function(req, res) {
   
   ticker = new Ticker(testLiveData, teamHash);
   ticker.sortGamesAndReplaceNames(res);
+});
+
+app.get("/live-data", function(req, res) {
+  var callback = function(data){
+    ticker = new Ticker(data, teamHash);
+    ticker.sortGamesAndReplaceNames(res);
+  };
+  var liveDataObject = new LiveData(request, liveDataUrl, callback);
 });
 
 app.listen(3000);
