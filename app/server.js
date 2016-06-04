@@ -49,14 +49,23 @@ app.get("/ticker-data", function(req, res) {
 
 app.get("/live-data", function(req, res) {
   var callback = function(data){
-    ticker = new Ticker(data, testTeamHash);
+    ticker = new Ticker(data, teamHash);
     ticker.sortGamesAndReplaceNames(res);
   };
-  var liveDataObject = new LiveData(request, liveDataUrl, callback);
+  var teamCallback = function(data) {
+    teamHash = data;
+    var liveDataObject = new LiveData(request, liveDataUrl, callback);
+  };
+  new TeamData(fs, request, teamDataUrl, teamCallback);
+
 });
 
 app.get("/team-data", function(req, res) {
-  new TeamData(fs, request, teamDataUrl, res);
+  var callback = function(data) {
+    teamHash = data;
+    res.json(teamHash);
+  }
+  new TeamData(fs, request, teamDataUrl, callback);
 });
 
 app.listen(3000);

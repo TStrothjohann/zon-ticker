@@ -37,6 +37,7 @@ Ticker.prototype.sortGamesAndReplaceNames = function(response){
     self.statusText(callbackStatus);
   }
   var callbackStatus = function(){
+    self.scores();
     response.json(self.data);
   }
 
@@ -148,6 +149,15 @@ Ticker.prototype.statusText = function(callback){
   if(callback){
     callback()
   };
+};
+
+Ticker.prototype.scores = function() {
+  for (var i = 0; i < this.data.games.length; i++) {
+    if(!this.data.games[i].teamHome.score.total){
+      this.data.games[i].teamHome.score.total = '-';
+      this.data.games[i].teamAway.score.total = '-';
+    }
+  }  
 };
 
 module.exports = Ticker;

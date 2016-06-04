@@ -1,4 +1,4 @@
-function TeamData(fs, request, teamDataUrl, res) {
+function TeamData(fs, request, teamDataUrl, callback) {
   var writePath = "./app/cache/team.json";
   var writeStream = fs.createWriteStream(writePath);
   var file = request(teamDataUrl).pipe(writeStream);
@@ -8,7 +8,7 @@ function TeamData(fs, request, teamDataUrl, res) {
       if(err) res.json(err);
       var teamDataJson = JSON.parse( data.toString() );
       var hash = self.convertTeamData(teamDataJson);
-      res.json( hash );
+      callback( hash );
     });
   });
 }
