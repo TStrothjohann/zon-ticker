@@ -10,6 +10,7 @@ var testTeamData = TestData.team;
 var testLiveData = TestData.live;
 var teamHash = convertTeamData(testTeamData);
 var liveDataUrl = "http://live0.zeit.de/fussball_em/feed/s2016/md3/dpa/onl1.json";
+var teamDataUrl = "http://live0.zeit.de/fussball_em/feed/s2016/config/de/dpa/teams.json";
 var ticker;
 
 function convertTeamData(data){
@@ -50,6 +51,20 @@ app.get("/live-data", function(req, res) {
     ticker.sortGamesAndReplaceNames(res);
   };
   var liveDataObject = new LiveData(request, liveDataUrl, callback);
+});
+
+app.get("/team-data", function(req, res) {
+  var writePath = "./app/cache/hello.json";
+  var writeStream = fs.createWriteStream(writePath);
+  var file = request(teamDataUrl).pipe(writeStream);
+  file.on('finish', function () {
+    fs.readFile(writePath, function(err, data){
+      if(err) res.json(err);
+      var teamDataJson = JSON.parse( data.toString() );
+      var hash = convertTeamData(teamDataJson);
+      res.json( hash );
+    });
+  });
 });
 
 app.listen(3000);
