@@ -149,7 +149,11 @@ Ticker.prototype.statusText = function(callback){
       dateString = "heute, " + dateFormat(date, "HH:MM");
     } 
     
-     this.data.games[i].statusText = dateString;
+    if(status === 'LIVE'){
+      dateString = 'live';
+    }
+
+    this.data.games[i].statusText = dateString;
   }  
   if(callback){
     callback()

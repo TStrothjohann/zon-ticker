@@ -105,21 +105,18 @@ describe("liveTicker", function() {
     expect(mockResponse.json).toHaveBeenCalled();
     expect(mockJsonData.games[0].teamHome.score.total).toEqual('4');
     expect(mockJsonData.games[0].teamAway.score.total).toEqual('1');
-    console.log(mockJsonData.games[0]);
+    expect(mockJsonData.games[0].statusText).toEqual('live');
   });
 
   it("serves -:- if the game hasn't started yet", function(){
     testLiveData.fixture[5].status = "PRE-MATCH";
     testLiveData.fixture[5].date = Date.now() + 10*60*1000;
-    //testLiveData.fixture[5].teamHome.score = {"total":"4","period1":"0","period2":"0","period3":"0","period4":"0","period5":"4"};
-    //testLiveData.fixture[5].teamAway.score = {"total":"1","period1":"1","period2":"0","period3":"0","period4":"0","period5":"0"};
-    console.log(testLiveData.fixture[5]);
+
     ticker = new Ticker(testLiveData, teamHash);
     ticker.sortGamesAndReplaceNames(mockResponse);
     expect(mockResponse.json).toHaveBeenCalled();
     expect(mockJsonData.games[1].teamHome.score.total).toEqual('-');
     expect(mockJsonData.games[1].teamAway.score.total).toEqual('-');
-    console.log(mockJsonData.games[1]);
   });
 
 
@@ -156,7 +153,7 @@ describe("liveTicker", function() {
         var apiPath = base_url + "ticker-data";
         request.get(apiPath, function(error, response, body) {
           var parsedBody = JSON.parse(body);
-          expect( parsedBody.link ).toEqual("http://www.zeit.de/thema/europameisterschaft");
+          expect( parsedBody.moreLink ).toEqual("http://www.zeit.de/thema/fussball-em");
           done();
         });
       });
