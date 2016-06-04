@@ -1,35 +1,61 @@
-var HTTPrequest = new XMLHttpRequest();
-HTTPrequest.open('GET', 'http://52.58.6.8:3000/live-data', true);
-var data = {};
-var markup = document.getElementById('em-ticker').innerHTML;
+var markup;
+var poll = function() {
+  var data = {};
+  if(!markup){
+    console.log("markup was undefined"); 
+    markup = document.getElementById('em-ticker').innerHTML;
+  }
 
-HTTPrequest.onload = function() {
-  if (HTTPrequest.status >= 200 && HTTPrequest.status < 400) {
-    // Success!
-    data = JSON.parse(HTTPrequest.responseText);
-    if(data !== {} && markup){
-      document.getElementById('em-ticker').innerHTML = findAndReplaceHandleBars(markup, data);
+  var HTTPrequest = new XMLHttpRequest();
+  HTTPrequest.open('GET', 'http://52.58.6.8:3000/live-data', true);
+
+  HTTPrequest.onload = function() {
+    if (HTTPrequest.status >= 200 && HTTPrequest.status < 400) {
+      // Success!
+      data = JSON.parse(HTTPrequest.responseText);
+      if(data !== {} && markup){
+        var markupToMessWith = markup;
+        document.getElementById('em-ticker').innerHTML = findAndReplaceHandleBars(markupToMessWith, data);
+      }
+    } else {
+      // We reached our target server, but it returned an error
     }
-  } else {
-    // We reached our target server, but it returned an error
+  };
+
+  HTTPrequest.onerror = function() {
+    console.log("There was a connection error of some sort");
+  };
+
+  HTTPrequest.send();
+
+  //Templating
+  function findAndReplaceHandleBars(tickerMarkup, liveData){
+    var regex = /{{(.*?)}}/;
+    while(regex.test(tickerMarkup)){
+      var match = regex.exec(tickerMarkup);
+      var nextHandles = match[0];
+      var objectValue; 
+      
+      try {
+        objectValue = eval( "liveData." + match[1] ); 
+      } catch (e) {
+        if (e instanceof SyntaxError) {
+            objectValue = "";
+            console.log(e.message);
+        } else {
+            objectValue = "";
+            console.log(e.message);
+        }
+      }
+      
+      tickerMarkup = tickerMarkup.replace(nextHandles, objectValue);
+    }
+    return tickerMarkup.replace(/[\r\t\n]/g, '');
   }
 };
 
-HTTPrequest.onerror = function() {
-  console.log("There was a connection error of some sort");
-};
+setInterval(function(){
+ poll();
+ console.log("polled");
+}, 10000);
 
-HTTPrequest.send();
-
-
-//Templating
-function findAndReplaceHandleBars(tickerMarkup, liveData){
-  var regex = /{{(.*?)}}/;
-  while(regex.test(tickerMarkup)){
-    var match = regex.exec(tickerMarkup);
-    var nextHandles = match[0];
-    var objectValue = eval( "liveData." + match[1] );
-    tickerMarkup = tickerMarkup.replace(nextHandles, objectValue);
-  }
-  return tickerMarkup.replace(/[\r\t\n]/g, '');
-}

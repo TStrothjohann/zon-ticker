@@ -14,26 +14,21 @@
         UEFA EURO 2016 - Runde 
       </h3>
       <span class="em-hp-live__module-more-link">
-        <a href="{{link}}">mehr ▸</a>
+        <a href="{{moreLink}}">mehr ▸</a>
       </span>
     </div>
     <span id="round"></span>
     <div class="em-hp-live__section {{games[0].status}}">
       <span class="flag-icon {{games[0].teamHome.flag}}"></span>
-      <span>{{games[0].teamHome.teamName}} gegen {{games[0].teamAway.teamName}}</span>
+      <span>{{games[0].teamHome.teamName}}</span>
+      <span>
+      ( {{games[0].teamHome.score.total}} : {{games[0].teamAway.score.total}} )
+      </span>
+      <span>{{games[0].teamAway.teamName}}</span>
       <span class="flag-icon {{games[0].teamAway.flag}}"></span>
       <span class="em-hp-live__module-status">{{games[0].status}}</span>
     </div>
-    <div class="em-hp-live__section {{games[1].status}}">
-      <span class="flag-icon {{games[1].teamHome.flag}}"></span>
-      <span>{{games[1].teamHome.teamName}} gegen {{games[1].teamAway.teamName}}</span>
-      <span class="flag-icon {{games[1].teamAway.flag}}"></span>
-    </div>
-    <div class="em-hp-live__section {{games[2].status}}">
-      <span class="flag-icon {{games[2].teamHome.flag}}"></span>
-      <span>{{games[2].teamHome.teamName}} gegen {{games[2].teamAway.teamName}}</span>
-      <span class="flag-icon {{games[2].teamAway.flag}}"></span>
-    </div>
+    <div>{{updated}}</div>
   </div>
 
   <script type="text/javascript" src="http://52.58.6.8:3000/js/em-hp-module.js"></script>
