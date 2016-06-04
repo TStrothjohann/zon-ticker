@@ -4,7 +4,8 @@ function Ticker(liveData, teamHash){
   this.liveData = liveData;
   this.teamHash = teamHash;
   this.data = {};
-  this.data.link = "http://www.zeit.de/thema/europameisterschaft";
+  this.data.moreLink = "http://www.zeit.de/thema/fussball-em";
+  this.data.liveLink = "http://www.zeit.de/em-ticker";
   this.liveStates = {
     "LIVE": "LIVE",
     "HALF-TIME": "LIVE",
@@ -91,7 +92,11 @@ Ticker.prototype.isLive = function(status) {
 };
 
 Ticker.prototype.moreLink = function(link) {
-  if(link) this.data.link = link;
+  if(link) this.data.moreLink = link;
+};
+
+Ticker.prototype.liveLink = function(link) {
+  if(link) this.data.liveLink = link;
 };
 
 Ticker.prototype.addFlags = function(callback){
