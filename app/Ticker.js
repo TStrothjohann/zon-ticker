@@ -152,6 +152,17 @@ Ticker.prototype.statusText = function(callback){
     if(status === 'LIVE'){
       dateString = 'live';
     }
+    if(status === 'FULL'){
+      dateString = "";
+      dateString += this.data.games[i].teamHome.score.total;
+      dateString += ":";
+      dateString += this.data.games[i].teamAway.score.total;
+      dateString += " (";
+      dateString += this.data.games[i].teamHome.score.period1;
+      dateString += ":";
+      dateString += this.data.games[i].teamAway.score.period1;
+      dateString += ")";
+    }
 
     this.data.games[i].statusText = dateString;
   }  

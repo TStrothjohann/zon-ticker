@@ -54,8 +54,9 @@ var poll = function() {
   }
 };
 
-setInterval(function(){
- poll();
- console.log("polled");
-}, 10000);
+poll();
+// setInterval(function(){
+//  poll();
+//  console.log("polled");
+// }, 10000);
 

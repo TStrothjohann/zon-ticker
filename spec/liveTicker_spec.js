@@ -70,6 +70,18 @@ describe("liveTicker", function() {
       expect(ticker.data.games[0].status).toEqual("LIVE");
     });
 
+    it("it should write score to statusTex when game is full", function() {
+      testLiveData.fixture[3].status = "FULL";
+      testLiveData.fixture[3].date = Date.now() + 1000*60*60*24*100;
+      testLiveData.fixture[3].teamHome.score = {"total":"5","period1":"2","period2":"3","period3":"0","period4":"0","period5":"0"};
+      testLiveData.fixture[3].teamAway.score = {"total":"3","period1":"0","period2":"3","period3":"0","period4":"0","period5":"0"};      
+      var last = testLiveData.fixture.length - 1;
+      ticker = new Ticker(testLiveData, teamHash);
+      ticker.sortGames();
+      ticker.statusText();
+      expect(ticker.data.games[last].statusText).toEqual("5:3 (2:0)");
+    });
+
     it("it should handle other lively states", function() {
       testLiveData.fixture[3].status = "LIVE";
       testLiveData.fixture[7].status = "HALF-TIME";

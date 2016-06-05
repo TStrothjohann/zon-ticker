@@ -1,5 +1,34 @@
-* {
-  box-sizing: border-box;
+.flag-icon {
+  border: none;
+  border-radius: .20rem;
+}
+
+.flag-icon.LIVE {
+
+}
+
+.em-hp-live__score.PRE-MATCH {
+  display: none;
+}
+
+.em-hp-live__score {
+  color: rgb(49, 49, 49);
+  font-family: TabletGothic, 'Helvetica Neue', Helvetica, Arial, FreeSans, sans-serif;
+  font-size:2em;
+  font-weight: 700;
+  letter-spacing: .05em;
+  line-height:2em;
+  text-decoration: none;
+}
+
+
+.flag-icon.FULL {
+  padding: 0;
+  background-position: 0;
+  position: relative;
+  display: inline-block;
+  width: 4em;
+  line-height: 3em;
 }
 
 .LIVE {
@@ -11,45 +40,25 @@
 }
 
 .em-hp-live__container {
-  overflow: hidden;
-  background-color: rgba(255,254,233,1);
-  display: block;
+
 }
 
 .em-hp-live__section {
-  display: block;
-  background-color: rgba(255,255,255,1);
+
 }
 
 .em-hp-live__module-headline {
-  font-size:1rem;
-  font-family:TabletGothic,Helvetica Neue,Helvetica,Arial,FreeSans,sans-serif;
-  line-height:1.4rem;
-  text-transform: uppercase;
-  text-align: left;
-  display: inline;    
+
 }
 
 .em-hp-live__module-more-link, 
 .em-hp-live__module-more-link:visited,
 .em-hp-live__module-more-link > a{
-  font-family:TabletGothic,Helvetica Neue,Helvetica,Arial,FreeSans,sans-serif;
-  position: absolute;
-  padding-right: 1rem;
-  right: 0px;
-  display: inline;
-  color: rgb(68, 68, 68);
-  text-decoration: none;
-  font-size: .875rem;
-  font-weight: 700;
-  letter-spacing: .03em;
+
 }
 
-.em-hp-live__module-more-link:after {
-  content: "›";
-}
 
-@media screen and (min-width:32.5em){
+/*@media screen and (min-width:32.5em){
   .em-hp-live__container {
     width: 100%;
   }
@@ -81,4 +90,4 @@
     width: 33%;
     display: inline-block;
   }
-}
+}*/
