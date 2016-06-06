@@ -7,12 +7,20 @@ var poll = function() {
     if(!tickerDiv){
       var tickerDiv = document.getElementById('em-ticker');
       var tickerArticle = tickerDiv.getElementsByTagName('article');
+      var teaserContainer = tickerDiv.getElementsByClassName("teaser-ticker-group__container")[0];
+
       for (var i = 0; i < jsondata.games.length; i++) {
-        tickerDiv.appendChild(tickerArticle[0].cloneNode(true));
-      }
+        var regex = /[0]/g;
+        var node = tickerArticle[0].cloneNode(true);
+        var string = node.innerHTML;
+        string = string.replace(regex, i)
+        node.innerHTML = string;
+        if(i !== 0){
+          teaserContainer.appendChild(node);
+        }
+      }    
       markup = tickerDiv.innerHTML;
     }
-
   }
 
   var HTTPrequest = new XMLHttpRequest();
