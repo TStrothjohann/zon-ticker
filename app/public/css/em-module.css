@@ -1,3 +1,84 @@
+.cp-region--ticker {
+  padding: 0;
+}
+
+.cp-area.cp-area--ticker {
+  background-color: #fff;
+  padding: 0 1.25rem 2.5rem;
+}
+
+.section-heading--ticker {
+  text-align: center;
+}
+
+.section-heading__link--ticker {
+    display: none;
+}
+
+@media screen and (min-width: 48em){
+  .section-heading--ticker {
+      text-align: left;
+  }
+}
+
+@media screen and (min-width: 48em){
+  .section-heading__link--ticker {
+      display: inline;
+  }
+}
+
+
+@media screen and (min-width: 61.25em){
+  .teaser-ticker-group__container {
+      width: 100%;
+  }
+}
+
+@media screen and (min-width: 48em){
+  .teaser-ticker-group__container {
+      padding-bottom: 0;
+      text-align: justify;
+      text-justify: distribute-all-lines;
+      -ms-text-justify: distribute-all-lines;
+      margin: auto;
+      width: 38.75rem;
+  }
+}
+
+.teaser-ticker-group__container {
+  padding-bottom: .625rem;
+}
+
+.teaser-ticker {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 18.75rem;
+    box-shadow: 0px 0px 8px 0 rgba(0,0,0,0.07);
+}
+
+@media screen and (min-width: 61.25em){
+  .teaser-ticker {
+      box-shadow: none;
+  }
+}
+
+@media screen and (min-width: 48em){
+  .teaser-ticker {
+      display: inline-block;
+      vertical-align: top;
+  }
+}
+
+@media screen and (min-width: 48em){
+  .teaser-ticker-group__container>* {
+      text-align: left;
+  }
+  .teaser-ticker {
+      background-color: #fff;
+      margin-bottom: 1.25rem;
+  }
+}
+
 .flag-icon {
   border: none;
   border-radius: .20rem;
@@ -22,7 +103,7 @@
 }
 
 
-.flag-icon.FULL {
+.flag-icon.LIVE {
   padding: 0;
   background-position: 0;
   position: relative;
@@ -32,11 +113,11 @@
 }
 
 .LIVE {
-  color: red;
+  
 }
 
 .PRE-MATCH {
-  color: green;
+  
 }
 
 .em-hp-live__container {

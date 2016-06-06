@@ -4,6 +4,7 @@ function Ticker(liveData, teamHash){
   this.liveData = liveData;
   this.teamHash = teamHash;
   this.data = {};
+  this.data.round = liveData.round;
   this.data.moreLink = "http://www.zeit.de/thema/fussball-em";
   this.data.liveLink = "http://www.zeit.de/em-ticker";
   this.liveStates = {
@@ -25,7 +26,6 @@ function Ticker(liveData, teamHash){
 }
 
 Ticker.prototype.sortGamesAndReplaceNames = function(response){
-
   var self = this;
   var callback = function(){
     self.teamNames(callbackNames);

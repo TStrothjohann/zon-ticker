@@ -11,72 +11,46 @@
     <body class="dev">
         <section class="page__content">
 
-
-<div class="cp-region cp-region--gallery">        
-<div id="em-ticker" class="cp-area cp-area--shop">
-  <div class="section-heading section-heading--unpadded section-heading--zeitshop">
-    <a href="{{moreLink}}" class="section-heading__title section-heading__title--zeitshop">
-      UEFA EURO 2016
-    </a>
-    <a href="{{moreLink}}" class="section-heading__link section-heading__link--unpadded section-heading__link--zeitshop">
-      <span class="section-heading__text">mehr</span>
-    </a>
-  </div>
-      <div class="teaser-shop-group__container teaser-shop-group__container--shop ">
-        <article class="teaser-shop" data-type="teaser">
-          <a href="{{liveLink}}">
-            <div class="teaser-shop__figurewrapper">
-
-              <div class="em-hp-live__section {{games[0].status}}">
-                <div class="em-hp-live__team">
-                  <span class="flag-icon {{games[0].status}} {{games[0].teamHome.flag}}"></span>
-                  <span class="em-hp-live__team-name" >{{games[0].teamHome.countrycode}}
-                  </span>
-                </div>
-                
-                <span class="em-hp-live__score {{games[0].status}}">
-                {{games[0].teamHome.score.total}} : {{games[0].teamAway.score.total}}
-                </span>
-                
-                <span class="em-hp-live__team">
-                  <span class="em-hp-live__team-name">{{games[0].teamAway.countrycode}}</span>
-                  <span class="flag-icon {{games[0].status}} {{games[0].teamAway.flag}}"></span>
-                </span>
-
-                <span class="em-hp-live__module-status">{{games[0].statusText}}</span>
+          <div class="cp-region cp-region--ticker">        
+            <div id="em-ticker" class="cp-area cp-area--ticker">
+              <div class="section-heading section-heading--unpadded section-heading--ticker">
+                <a href="{{moreLink}}" class="section-heading__title">
+                  UEFA EURO 2016
+                </a>
+                <a href="{{moreLink}}" class="section-heading__link section-heading__link--unpadded section-heading__link--ticker">
+                  <span class="section-heading__text">mehr</span>
+                </a>
               </div>
+                <div class="teaser-ticker-group__container">
+                  
+                  <article class="teaser-ticker" data-type="teaser">
+                    <a href="{{liveLink}}">
+                      <!-- Team left: -->
+                      <div class="em-hp-live__team-left">
+                        <span class="flag-icon {{games[0].status}} {{games[0].teamHome.flag}}"></span>
+                        <span class="em-hp-live__team-name" >{{games[0].teamHome.countrycode}}</span>
+                      </div>
+                      
+                      <!-- Score -->
+                      <span class="em-hp-live__score {{games[0].status}}">
+                      {{games[0].teamHome.score.total}} : {{games[0].teamAway.score.total}}
+                      </span>
+                      
+                      <!-- Team right -->
+                      <div class="em-hp-live__team-right">
+                        <span class="flag-icon {{games[0].status}} {{games[0].teamAway.flag}}"></span>
+                        <span class="em-hp-live__team-name">{{games[0].teamAway.countrycode}}</span>
+                      </div>
+
+                      <!-- Time / Status / Final-Score -->
+                      <span class="em-hp-live__module-status">{{games[0].statusText}}</span>
+                    </a>
+                  </article>                       
+
+                </div>
 
             </div>
-          </a>
-        </article>
-
-
-
-        <article class="teaser-shop" data-type="teaser">
-          <a href="{{liveLink}}">
-            <div class="teaser-shop__figurewrapper">
-            <!-- Platzhalter -->
-            </div>
-            <div class="teaser-shop__container">
-              <p class="teaser-shop__text">Teaser muss mindestens zwei Zeilen lang sein...</p>
-            </div>
-          </a>
-        </article>
-        <article class="teaser-shop" data-type="teaser">
-          <a href="{{liveLink}}">
-            <div class="teaser-shop__figurewrapper">
-            <!-- Platzhalter -->
-            </div>
-            <div class="teaser-shop__container">
-              <p class="teaser-shop__text">Teaser muss mindestens zwei Zeilen lang sein...</p>
-            </div>
-          </a>
-        </article>                                      
-      
-      </div>
-
-    </div>
-    </div>
+          </div>
 
           <script type="text/javascript" src="http://localhost:3000/js/em-hp-module.js"></script>
 

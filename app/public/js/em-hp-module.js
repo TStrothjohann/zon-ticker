@@ -1,9 +1,18 @@
 var markup;
+
 var poll = function() {
   var data = {};
-  if(!markup){
-    console.log("markup was undefined"); 
-    markup = document.getElementById('em-ticker').innerHTML;
+  
+  var prepareMarkup = function(jsondata){
+    if(!tickerDiv){
+      var tickerDiv = document.getElementById('em-ticker');
+      var tickerArticle = tickerDiv.getElementsByTagName('article');
+      for (var i = 0; i < jsondata.games.length; i++) {
+        tickerDiv.appendChild(tickerArticle[0].cloneNode(true));
+      }
+      markup = tickerDiv.innerHTML;
+    }
+
   }
 
   var HTTPrequest = new XMLHttpRequest();
@@ -13,6 +22,9 @@ var poll = function() {
     if (HTTPrequest.status >= 200 && HTTPrequest.status < 400) {
       // Success!
       data = JSON.parse(HTTPrequest.responseText);
+      if(!markup){
+        prepareMarkup(data);
+      }
       if(data !== {} && markup){
         var markupToMessWith = markup;
         document.getElementById('em-ticker').innerHTML = findAndReplaceHandleBars(markupToMessWith, data);

@@ -227,7 +227,7 @@ describe("liveTicker", function() {
         expect( parsedBody.games[0].statusText ).not.toBe(undefined);
         expect( parsedBody.games[0].date ).not.toBe(undefined);
         expect( parsedBody.games[0].status ).not.toBe(undefined);
-        expect( parsedBody.games[0].round ).not.toBe(undefined);
+        expect( parsedBody.round ).not.toBe(undefined);
         done();
       });
     });
