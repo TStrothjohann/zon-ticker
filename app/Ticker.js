@@ -150,8 +150,30 @@ Ticker.prototype.statusText = function(callback){
     } 
     
     if(status === 'LIVE'){
-      dateString = 'live';
+      var periods = Object.keys(this.data.games[i].kickOff);
+      var current = periods.length - 1;
+      var minutes = 0;
+      if(periods.length < 1){
+        dateString = 'live'
+      }else if(periods && periods.length === 1){
+        var now = Date.now();
+        var start = new Date(this.data.games[i].kickOff.periodStart1);
+        var elapsed = now - start;
+        minutes = Math.floor(elapsed / 1000 / 60);
+        if (minutes-45 > 0) {
+          dateString = "45' + " + String(minutes-45);
+        }else{
+          dateString = String(minutes) + "'"; 
+        }
+      }else{
+        var now = Date.now();
+        var start = new Date(this.data.games[i].kickOff[ periods[current] ]);
+        var elapsed = Math.floor((now - start)/1000/60);
+        minutes = (current*45) + elapsed; 
+        dateString = String(minutes) + "'";
+      }
     }
+
     if(status === 'FULL'){
       dateString = "";
       dateString += this.data.games[i].teamHome.score.total;

@@ -70,7 +70,7 @@ describe("liveTicker", function() {
       expect(ticker.data.games[0].status).toEqual("LIVE");
     });
 
-    it("it should write score to statusTex when game is full", function() {
+    it("it should write score to statusText when game is full", function() {
       testLiveData.fixture[3].status = "FULL";
       testLiveData.fixture[3].date = Date.now() + 1000*60*60*24*100;
       testLiveData.fixture[3].teamHome.score = {"total":"5","period1":"2","period2":"3","period3":"0","period4":"0","period5":"0"};
@@ -80,6 +80,25 @@ describe("liveTicker", function() {
       ticker.sortGames();
       ticker.statusText();
       expect(ticker.data.games[last].statusText).toEqual("5:3 (2:0)");
+    });
+
+    it("it should write time to statusText when game is live", function() {
+      testLiveData.fixture[3].status = "LIVE";
+      var gameStart = Date.now() - 1000*60*88;
+      var gameStartString = new Date(gameStart).toLocaleString();
+      var secondHalfStart = gameStart + (45+3+20)*60*1000;
+      var secondHalfStartString = new Date(secondHalfStart).toLocaleString();
+
+      testLiveData.fixture[3].date = gameStart;
+
+      testLiveData.fixture[3].teamHome.score = {"total":"5","period1":"2","period2":"3","period3":"0","period4":"0","period5":"0"};
+      testLiveData.fixture[3].teamAway.score = {"total":"3","period1":"0","period2":"3","period3":"0","period4":"0","period5":"0"};      
+      testLiveData.fixture[3].kickOff = { "periodStart1": gameStartString, "periodStart2": secondHalfStartString}
+
+      ticker = new Ticker(testLiveData, teamHash);
+      ticker.sortGames();
+      ticker.statusText();
+      expect(ticker.data.games[0].statusText).toEqual("65'");
     });
 
     it("it should handle other lively states", function() {

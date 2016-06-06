@@ -47,6 +47,22 @@ app.get("/ticker-data", function(req, res) {
   ticker.sortGamesAndReplaceNames(res);
 });
 
+app.get("/ticker-data2", function(req, res) {
+  var data = TestData.live2;
+
+  for (var i = 0; i < data.fixture.length; i++) {
+    var randomScoreHome = Math.floor((Math.random() * 10) + 1);
+    var randomScoreAway = Math.floor((Math.random() * 10) + 1);
+    data.fixture[i].teamHome.score.total = randomScoreHome;
+    data.fixture[i].teamHome.score.period1 = randomScoreHome;
+    data.fixture[i].teamAway.score.total = randomScoreAway;
+    data.fixture[i].teamAway.score.period1 = randomScoreAway;
+  }
+
+  ticker = new Ticker(data, testTeamHash);
+  ticker.sortGamesAndReplaceNames(res);
+});
+
 app.get("/live-data", function(req, res) {
   var callback = function(data){
     ticker = new Ticker(data, teamHash);
