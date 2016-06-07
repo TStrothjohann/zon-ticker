@@ -26,7 +26,7 @@
                   <article class="teaser-ticker" data-type="teaser">
                     <a href="{{liveLink}}">
                       <!-- Team left: -->
-                      <div class="em-hp-live__team-left">
+                      <div class="em-hp-live__team-left {{games[0].status}}">
                         <span class="flag-icon {{games[0].status}} {{games[0].teamHome.flag}}"></span>
                         <span class="em-hp-live__team-name" >{{games[0].teamHome.countrycode}}</span>
                       </div>
@@ -37,13 +37,13 @@
                       </span>
                       
                       <!-- Team right -->
-                      <div class="em-hp-live__team-right">
+                      <div class="em-hp-live__team-right {{games[0].status}}">
                         <span class="flag-icon {{games[0].status}} {{games[0].teamAway.flag}}"></span>
                         <span class="em-hp-live__team-name">{{games[0].teamAway.countrycode}}</span>
                       </div>
 
                       <!-- Time / Status / Final-Score -->
-                      <span class="em-hp-live__module-status">{{games[0].statusText}}</span>
+                      <div class="em-hp-live__module-status {{games[0].status}}">{{games[0].statusText}}</div>
                     </a>
                   </article>                       
 

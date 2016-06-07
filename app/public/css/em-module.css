@@ -7,6 +7,28 @@
   padding: 0 1.25rem 2.5rem;
 }
 
+.em-hp-live__team-left.PRE-MATCH,
+em-hp-live__team-right.PRE-MATCH {
+  display: inline-block;
+}
+
+.em-hp-live__team-left.LIVE > span, 
+.em-hp-live__team-right.LIVE > span {
+  display: block;
+  text-align: center;
+}
+
+.em-hp-live__score.LIVE {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.em-hp-live__module-status.LIVE {
+  display: block;
+  text-align: center;
+  float: none;
+}
+
 .section-heading--ticker {
   text-align: center;
 }
@@ -47,6 +69,7 @@
 
 .teaser-ticker-group__container {
   padding-bottom: .625rem;
+  display: inline-block;
 }
 
 .teaser-ticker {
@@ -54,6 +77,11 @@
     margin-right: auto;
     max-width: 18.75rem;
     box-shadow: 0px 0px 8px 0 rgba(0,0,0,0.07);
+}
+
+.teaser-ticker > a > * {
+  display: inline-block;
+  float: left;
 }
 
 @media screen and (min-width: 61.25em){
