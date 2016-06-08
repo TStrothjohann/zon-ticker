@@ -12,13 +12,15 @@ var poll = function() {
       for (var i = 0; i < jsondata.games.length; i++) {
         var regex = /[0]/g;
         var node = tickerArticle[0].cloneNode(true);
+        node.classList.add(jsondata.games[i].status);
         var string = node.innerHTML;
         string = string.replace(regex, i)
         node.innerHTML = string;
         if(i !== 0){
           teaserContainer.appendChild(node);
         }
-      }    
+      }
+      tickerArticle[0].classList.add(jsondata.games[0].status);    
       markup = tickerDiv.innerHTML;
     }
   }

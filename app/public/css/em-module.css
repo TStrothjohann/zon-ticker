@@ -171,14 +171,12 @@ em-hp-live__team-right.PRE-MATCH {
   .em-hp-live__container {
     width: 100%;
   }
-
   .em-hp-live__section {
     width: 33%;
     display: inline-block;
     position: relative;
   }
 }
-
 @media screen and (min-width:48em){
   
   .em-hp-live__container {
@@ -190,7 +188,6 @@ em-hp-live__team-right.PRE-MATCH {
     position: relative;
   }
 }
-
 @media screen and (min-width:61.25em){
   .em-hp-live__container {
     width: 100%;
