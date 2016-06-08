@@ -81,7 +81,8 @@ em-hp-live__team-right.PRE-MATCH {
 
 .teaser-ticker-group__container {
   padding-bottom: .625rem;
-  display: inline-block;
+  display: block;
+  text-align: center;
 }
 
 .teaser-ticker {
