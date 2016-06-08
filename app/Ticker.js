@@ -144,10 +144,14 @@ Ticker.prototype.statusText = function(callback){
   for (var i = 0; i < this.data.games.length; i++) {
     var status = this.data.games[i].status;
     var date = new Date(this.data.games[i].date);
+    var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
     var dateString = dateFormat(date, "dd.mm, HH:MM");
     if( date.toDateString() === new Date().toDateString() ){
       dateString = "heute, " + dateFormat(date, "HH:MM");
-    } 
+    }
+    if( date.toDateString() === tomorrow.toDateString() ){
+      dateString = "morgen, " + dateFormat(date, "HH:MM");
+    }  
     
     if(status === 'LIVE'){
       var periods = Object.keys(this.data.games[i].kickOff);

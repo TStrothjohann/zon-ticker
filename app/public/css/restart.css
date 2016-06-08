@@ -1,0 +1,62 @@
+.teaser-ticker-group__container {
+  display: flex;
+  height: 100px;
+}
+
+.teaser-ticker {
+  width: 50%;
+  height: 100px;
+  margin: auto;
+}
+
+.flag-icon {
+  border: none;
+  border-radius: .20rem;
+}
+
+.em-hp-live__score.PRE-MATCH {
+  display: none;
+}
+
+.em-hp-live__score {
+  color: rgb(49, 49, 49);
+  font-family: TabletGothic, 'Helvetica Neue', Helvetica, Arial, FreeSans, sans-serif;
+  font-size:2em;
+  font-weight: 700;
+  letter-spacing: .05em;
+  line-height:2em;
+  text-decoration: none;
+}
+
+
+.flag-icon.LIVE {
+  padding: 0;
+  background-position: 0;
+  position: relative;
+  display: inline-block;
+  width: 4em;
+  line-height: 3em;
+}
+
+
+.em-hp-live__team-left.PRE-MATCH,
+em-hp-live__team-right.PRE-MATCH {
+  display: inline-block;
+}
+
+.em-hp-live__team-left.LIVE > span, 
+.em-hp-live__team-right.LIVE > span {
+  display: block;
+  text-align: center;
+}
+
+.em-hp-live__score.LIVE {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.em-hp-live__module-status.LIVE {
+  display: block;
+  text-align: center;
+  float: none;
+}

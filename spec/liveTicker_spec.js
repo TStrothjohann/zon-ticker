@@ -118,11 +118,20 @@ describe("liveTicker", function() {
 
   it("it writes heute if game is going to be heute", function() {
     testLiveData.fixture[3].status = "PRE-MATCH";
-    testLiveData.fixture[3].date = Date.now() + 60*60*1000;
+    testLiveData.fixture[3].date = Date.now() + 1*60*1000;
     ticker = new Ticker(testLiveData, teamHash);
     ticker.sortGamesAndReplaceNames(mockResponse);
     expect(mockResponse.json).toHaveBeenCalled();
     expect(mockJsonData.games[3].statusText).toContain('heute, ');
+  });
+
+  it("it writes morgen if game is going to be morgen", function() {
+    testLiveData.fixture[3].status = "PRE-MATCH";
+    testLiveData.fixture[3].date = Date.now() + 24*60*60*1000;
+    ticker = new Ticker(testLiveData, teamHash);
+    ticker.sortGamesAndReplaceNames(mockResponse);
+    expect(mockResponse.json).toHaveBeenCalled();
+    expect(mockJsonData.games[3].statusText).toContain('morgen, ');
   });
 
   it("serves the newest score counts", function(){

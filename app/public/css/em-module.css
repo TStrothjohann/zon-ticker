@@ -12,6 +12,18 @@ em-hp-live__team-right.PRE-MATCH {
   display: inline-block;
 }
 
+.em-hp-live__team-right.PRE-MATCH {
+  margin-right: 1rem;
+}
+
+.em-hp-live__team-left.PRE-MATCH {
+  margin-right: .5rem;
+}
+
+.em-hp-live__team-left.PRE-MATCH:after {
+  content: ":";
+}
+
 .em-hp-live__team-left.LIVE > span, 
 .em-hp-live__team-right.LIVE > span {
   display: block;
@@ -84,6 +96,18 @@ em-hp-live__team-right.PRE-MATCH {
   float: left;
 }
 
+.teaser-ticker.LIVE {
+  border-right: 1px solid;
+  padding-right: 1rem;
+  margin-right: 2rem;
+  float: left;
+}
+
+.teaser-ticker.PRE-MATCH {
+  border-bottom: 1px solid;
+  float: left;
+}
+
 @media screen and (min-width: 61.25em){
   .teaser-ticker {
       box-shadow: none;
@@ -101,10 +125,7 @@ em-hp-live__team-right.PRE-MATCH {
   .teaser-ticker-group__container>* {
       text-align: left;
   }
-  .teaser-ticker {
-      background-color: #fff;
-      margin-bottom: 1.25rem;
-  }
+
 }
 
 .flag-icon {
