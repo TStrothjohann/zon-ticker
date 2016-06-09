@@ -7,7 +7,7 @@ var poll = function() {
     if(!tickerDiv){
       var tickerDiv = document.getElementById('em-ticker');
       var tickerArticle = tickerDiv.getElementsByTagName('article');
-      var teaserContainer = tickerDiv.getElementsByClassName("teaser-ticker-group__container")[0];
+      var teaserContainer = tickerDiv.getElementsByClassName("sport-ticker--container")[0];
 
       for (var i = 0; i < jsondata.games.length; i++) {
         var regex = /[0]/g;
@@ -26,7 +26,7 @@ var poll = function() {
   }
 
   var HTTPrequest = new XMLHttpRequest();
-  HTTPrequest.open('GET', 'http://52.58.6.8:3000/ticker-data2', true);
+  HTTPrequest.open('GET', 'http://52.58.6.8:3000/ticker-data3', true);
 
   HTTPrequest.onload = function() {
     if (HTTPrequest.status >= 200 && HTTPrequest.status < 400) {
