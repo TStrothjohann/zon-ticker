@@ -26,7 +26,7 @@ var poll = function() {
   }
 
   var HTTPrequest = new XMLHttpRequest();
-  HTTPrequest.open('GET', 'http://localhost:3000/ticker-data2', true);
+  HTTPrequest.open('GET', 'http://52.58.6.8:3000/ticker-data2', true);
 
   HTTPrequest.onload = function() {
     if (HTTPrequest.status >= 200 && HTTPrequest.status < 400) {

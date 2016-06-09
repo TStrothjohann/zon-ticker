@@ -256,42 +256,66 @@ describe("liveTicker", function() {
 });
 
 //////ToDo:
-// Server crawls live- and teamData - mocked with test data in test
-// App produces tickerData-Object
-// Server serves tickerData-Object
+// State tests (Halbzeit, canceled etc.)
+// Performance (
+// - serves live.json which get's updated every 10 seconds
+// - calculates team-data only once a day
+// - Make links configurable
+// - When data unavailable display:none
 
+// Design: 
+// - handle OVER state!
+// - mobile
+// - check back for wording
+
+// Embeds:
+// - different embeds depending on refreshing behaviour
+// - make it available on article pages
+
+// Tracking:
+// -  
+
+// Ads:
+// - can be reloaded EVENT 
+
+
+///////////////////////////////////////////////////////////
 
 ///// States ////
-// it should know when a game is live (LIVE)
-// it should know when a game is in half-time (HALF-TIME)
-// it should know when a game is in half-time-extratime (HALF-EXTRATIME)
-// it should know when a game is in second half (?)
-// it should know when a game is in penalties (PENALTY-SHOOTOUT)
-// it should know when a game is over (FULL)
-// it should show when a game was revoked, withdrawn, canceled, discarded or postponed
+// it should show correctly when a game is live (LIVE) √
+// it should know when a game is in half-time (HALF-TIME) x
+// it should know when a game is in half-time-extratime (HALF-EXTRATIME) x
+// it should know when a game is in second half (?) √
+// it should know when a game is in penalties (PENALTY-SHOOTOUT) x
+// it should know when a game is over (FULL) x
+// it should show when a game was revoked, withdrawn, canceled, discarded or postponed x
+// it should show when two games are live x
+// it should show a game as big as live during one hour after the end of the game x
+
 
 ///// Features ////
 // 
-// it should update when a goal has happened
-// it should link to live-tickers if there is one 
-// it should show the current time of live games
-// it should auto-update on hp
-// it should be refreshable on article pages
-// it should show the time of the last refresh
-// it shouldn't show excluded games
-// it should order the games live first and then by time
+// it should update when a goal has happened √
+// it should link to live-tickers if there is one x
+// it should show the current time of live games √ (test it)
+// it should auto-update on hp (√)
+// it should be refreshable on article pages (√)
+// it should show the time of the last refresh x
+// it shouldn't show excluded games x
+// it should order the games live first and then by time √
 
 ///// Infrastructure ////
-// It serves a json file no matter what traffic comes
-// It doesn't block any page load
-// It emit events for ad Reloads and tracking purposes
+// It serves a json file no matter what traffic comes ?
+// It doesn't block any page load √
+// It doesn't show when data isn't available x
+// It emit events for ad Reloads and tracking purposes x
 
 
 ////// Design /////
-// it should show the teams flags
-// it should show live games more prominently than upcomin or games that are over
-// it should be swipe- and slideable on mobile
-// it should show the phase/day of the tournament
+// it should show the teams flags √
+// it should show live games more prominently than upcoming or games that are over √
+// it should be swipe- and slideable on mobile x
+// it should show the phase/day of the tournament ?
 // it should handle 0-3 live games
 
 
