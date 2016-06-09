@@ -73,6 +73,35 @@ app.get("/ticker-data2", function(req, res) {
   ticker.sortGamesAndReplaceNames(res);
 });
 
+app.get("/ticker-data3", function(req, res) {
+  var data = TestData.live3;
+  data.fixture[2].status = "LIVE";
+  data.fixture[3].status = "LIVE";
+  for (var i = 0; i < data.fixture.length; i++) {
+    var randomScoreHome = Math.floor((Math.random() * 10) + 1);
+    var randomScoreAway = Math.floor((Math.random() * 10) + 1);
+    data.fixture[i].teamHome.score.total = randomScoreHome;
+    data.fixture[i].teamHome.score.period1 = randomScoreHome;
+    data.fixture[i].teamAway.score.total = randomScoreAway;
+    data.fixture[i].teamAway.score.period1 = randomScoreAway;
+
+    if(data.fixture[i].status === 'LIVE'){
+      var randomGameDuration = Math.floor((Math.random() * 94) + 1);
+      var gameStart = Date.now() - 1000*60*randomGameDuration;
+      var gameStartString = new Date(gameStart).toLocaleString();
+      var secondHalfStart = gameStart + (45+3+20)*60*1000;
+      var secondHalfStartString = new Date(secondHalfStart).toLocaleString();
+
+      data.fixture[i].date = gameStart;
+      data.fixture[i].kickOff = { "periodStart1": gameStartString, "periodStart2": secondHalfStartString}
+    }
+  }
+
+  ticker = new Ticker(data, testTeamHash);
+  ticker.sortGamesAndReplaceNames(res);
+});
+
+
 app.get("/live-data", function(req, res) {
   var callback = function(data){
     ticker = new Ticker(data, teamHash);
