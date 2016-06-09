@@ -220,7 +220,7 @@ describe("liveTicker", function() {
         var apiPath = base_url + "ticker-data";
         request.get(apiPath, function(error, response, body) {
           var parsedBody = JSON.parse(body);
-          expect( parsedBody.games[0].statusText ).toEqual( "10.06, 21:00" );
+          expect( parsedBody.games[0].statusText ).toEqual( "morgen, 21:00 Uhr" );
           done();
         });
       });

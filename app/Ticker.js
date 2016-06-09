@@ -147,10 +147,10 @@ Ticker.prototype.statusText = function(callback){
     var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
     var dateString = dateFormat(date, "dd.mm, HH:MM");
     if( date.toDateString() === new Date().toDateString() ){
-      dateString = "heute, " + dateFormat(date, "HH:MM");
+      dateString = "heute, " + dateFormat(date, "HH:MM") + " Uhr";
     }
     if( date.toDateString() === tomorrow.toDateString() ){
-      dateString = "morgen, " + dateFormat(date, "HH:MM");
+      dateString = "morgen, " + dateFormat(date, "HH:MM") + " Uhr";
     }  
     
     if(status === 'LIVE'){
