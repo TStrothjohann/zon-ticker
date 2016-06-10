@@ -21,7 +21,7 @@ function Ticker(liveData, teamHash){
   };
   this.upcomingStates = {
     "REVOKED": "verlegt, ",
-    "PRE-MATCH": ""
+    "PRE-MATCH": "folgt "
   };
 }
 
@@ -91,6 +91,22 @@ Ticker.prototype.isLive = function(status) {
   }
 };
 
+Ticker.prototype.isOff = function(status) {
+  if(this.offStates[status]){
+    return true;
+  }else{
+    return false;
+  }
+};
+
+Ticker.prototype.isUpcoming = function(status) {
+  if(this.upcomingStates[status]){
+    return true;
+  }else{
+    return false;
+  }
+};
+
 Ticker.prototype.moreLink = function(link) {
   if(link) this.data.moreLink = link;
 };
@@ -142,20 +158,26 @@ Ticker.prototype.statusText = function(callback){
   var dateOptions = {month: "long", day: "numeric", hour: "2-digit", minute: "2-digit"};
   
   for (var i = 0; i < this.data.games.length; i++) {
+    var periods = Object.keys(this.data.games[i].kickOff);
+    var current = periods.length - 1;
     var status = this.data.games[i].status;
     var date = new Date(this.data.games[i].date);
     var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
     var dateString = dateFormat(date, "dd.mm, HH:MM");
-    if( date.toDateString() === new Date().toDateString() ){
-      dateString = "heute, " + dateFormat(date, "HH:MM") + " Uhr";
-    }
-    if( date.toDateString() === tomorrow.toDateString() ){
-      dateString = "morgen, " + dateFormat(date, "HH:MM") + " Uhr";
-    }  
     
-    if(status === 'LIVE'){
-      var periods = Object.keys(this.data.games[i].kickOff);
-      var current = periods.length - 1;
+    if(this.isUpcoming(status)){
+      if( date.toDateString() === new Date().toDateString() ){
+        dateString = "heute, " + dateFormat(date, "HH:MM") + " Uhr";
+      }
+      if( date.toDateString() === tomorrow.toDateString() ){
+        dateString = "morgen, " + dateFormat(date, "HH:MM") + " Uhr";
+      }
+      this.data.games[i].statusClass = "PRE-MATCH";
+    }
+
+    
+    if(this.isLive(status)){
+
       var minutes = 0;
       if(periods.length < 1){
         dateString = 'live'
@@ -176,18 +198,33 @@ Ticker.prototype.statusText = function(callback){
         minutes = (current*45) + elapsed; 
         dateString = String(minutes) + "'";
       }
+      this.data.games[i].statusClass = "LIVE";
+    }
+
+    if(this.isOff(status)){
+      dateString = this.offStates[status];
+      this.data.games[i].statusClass = "PRE-MATCH";
     }
 
     if(status === 'FULL'){
-      dateString = "";
-      dateString += this.data.games[i].teamHome.score.total;
-      dateString += ":";
-      dateString += this.data.games[i].teamAway.score.total;
-      dateString += " (";
-      dateString += this.data.games[i].teamHome.score.period1;
-      dateString += ":";
-      dateString += this.data.games[i].teamAway.score.period1;
-      dateString += ")";
+      var now = Date.now();
+      var start = new Date(this.data.games[i].kickOff[ periods[current] ]);
+
+      if( (now - start)/1000/60 > 90 ){
+        dateString = "";
+        dateString += this.data.games[i].teamHome.score.total;
+        dateString += ":";
+        dateString += this.data.games[i].teamAway.score.total;
+        dateString += " (";
+        dateString += this.data.games[i].teamHome.score.period1;
+        dateString += ":";
+        dateString += this.data.games[i].teamAway.score.period1;
+        dateString += ")";
+        this.data.games[i].statusClass = "FULL";
+      }else{
+        dateString = "beendet";
+        this.data.games[i].statusClass = "LIVE";
+      }
     }
 
     this.data.games[i].statusText = dateString;

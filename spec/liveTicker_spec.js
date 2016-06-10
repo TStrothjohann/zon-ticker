@@ -72,14 +72,20 @@ describe("liveTicker", function() {
 
     it("it should write score to statusText when game is full", function() {
       testLiveData.fixture[3].status = "FULL";
-      testLiveData.fixture[3].date = Date.now() + 1000*60*60*24*100;
+      var gameStart = Date.now() - 1000*60*60*24*220;
+      var gameStartString = new Date(gameStart).toLocaleString();
+      var secondHalfStart = gameStart + (45+3+20)*60*1000;
+      var secondHalfStartString = new Date(secondHalfStart).toLocaleString();
+      testLiveData.fixture[3].date = gameStartString
+      testLiveData.fixture[3].test = "test";
+      testLiveData.fixture[3].kickOff = { "periodStart1": gameStartString, "periodStart2": secondHalfStartString};
       testLiveData.fixture[3].teamHome.score = {"total":"5","period1":"2","period2":"3","period3":"0","period4":"0","period5":"0"};
       testLiveData.fixture[3].teamAway.score = {"total":"3","period1":"0","period2":"3","period3":"0","period4":"0","period5":"0"};      
       var last = testLiveData.fixture.length - 1;
       ticker = new Ticker(testLiveData, teamHash);
       ticker.sortGames();
       ticker.statusText();
-      expect(ticker.data.games[last].statusText).toEqual("5:3 (2:0)");
+      expect(ticker.data.games[0].statusText).toEqual("5:3 (2:0)");
     });
 
     it("it should write time to statusText when game is live", function() {
@@ -158,6 +164,67 @@ describe("liveTicker", function() {
     expect(mockJsonData.games[1].teamHome.score.total).toEqual('-');
     expect(mockJsonData.games[1].teamAway.score.total).toEqual('-');
   });
+
+  it("writes abgesetzt to statusText if game has been withdrawn", function(){
+    testLiveData.fixture[5].status = "WITHDRAWN";
+    ticker = new Ticker(testLiveData, teamHash);
+    ticker.sortGamesAndReplaceNames(mockResponse);
+    expect(mockResponse.json).toHaveBeenCalled();
+    expect(mockJsonData.games[4].statusText).toEqual('abgesetzt');    
+  });
+
+  it("writes a statusClass to games[i].statusClass", function(){
+      //LIVE
+      testLiveData.fixture[0].status = "LIVE";
+      testLiveData.fixture[1].status = "HALF-TIME";
+      testLiveData.fixture[2].status = "HALF-EXTRATIME";
+      testLiveData.fixture[3].status = "PENALTY-SHOOTOUT";
+      //OFF
+      testLiveData.fixture[4].status = "WITHDRAWN";
+      testLiveData.fixture[5].status = "POSTPONED";
+      testLiveData.fixture[6].status = "CANCELED";
+      testLiveData.fixture[7].status = "DISCARDED";
+      //UPCOMING
+      testLiveData.fixture[8].status = "REVOKED";
+      testLiveData.fixture[9].status = "PRE-MATCH";
+      //FULL
+      testLiveData.fixture[10].status = "FULL";
+
+      ticker = new Ticker(testLiveData, teamHash);
+      ticker.sortGamesAndReplaceNames(mockResponse);
+      expect(mockResponse.json).toHaveBeenCalled();
+
+      expect(mockJsonData.games[0].statusClass).toEqual("LIVE");
+      expect(mockJsonData.games[1].statusClass).toEqual("LIVE");
+      expect(mockJsonData.games[2].statusClass).toEqual("LIVE");
+      expect(mockJsonData.games[3].statusClass).toEqual("LIVE");
+      
+      expect(mockJsonData.games[4].statusClass).toEqual("PRE-MATCH");
+      expect(mockJsonData.games[5].statusClass).toEqual("PRE-MATCH");
+      expect(mockJsonData.games[6].statusClass).toEqual("PRE-MATCH");
+      expect(mockJsonData.games[7].statusClass).toEqual("PRE-MATCH");
+
+      expect(mockJsonData.games[8].statusClass).toEqual("PRE-MATCH");
+      expect(mockJsonData.games[9].statusClass).toEqual("PRE-MATCH");
+
+      //if not older than 90 minutes it's still LIVE
+      expect(mockJsonData.games[10].statusClass).toEqual("LIVE");
+  });
+
+  it("it should LIVE  to statusClass when game is full for less than 90min", function() {
+    testLiveData.fixture[3].status = "FULL";
+    testLiveData.fixture[3].date = Date.now() + 1000*60*60*24*100;
+    testLiveData.fixture[3].teamHome.score = {"total":"5","period1":"2","period2":"3","period3":"0","period4":"0","period5":"0"};
+    testLiveData.fixture[3].teamAway.score = {"total":"3","period1":"0","period2":"3","period3":"0","period4":"0","period5":"0"};      
+    var last = testLiveData.fixture.length - 1;
+    ticker = new Ticker(testLiveData, teamHash);
+    ticker.sortGames();
+    ticker.statusText();
+    expect(ticker.data.games[last].statusText).toEqual("beendet");
+    expect(ticker.data.games[last].statusClass).toEqual("LIVE");
+    expect(ticker.data.games[last].status).toEqual("FULL");
+  });
+  //Test für verlegt fehlt verlegt: Datum
 
 
   describe("Server", function() {
