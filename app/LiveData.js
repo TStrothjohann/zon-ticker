@@ -1,19 +1,25 @@
-function LiveData(request, url, callback){
+function LiveData(request, fs, url, callback){
+  this.writePath = "./app/cache/live.json";
   this.liveData = {};
   this.teamData = {};
-  this.refreshLiveData(request, url, callback);
+  this.refreshLiveData(request, fs, url, callback);
 }
 
-LiveData.prototype.refreshLiveData = function(request, dataurl, callback){
-  request
-    .get({url:dataurl, json:true })
-    .on('error', function(error){
-      console.log("error: ", error)
-    })
-    .on('data', function(data){
-      this.liveData = JSON.parse( data.toString() );
-      callback(this.liveData);
-    })
+LiveData.prototype.refreshLiveData = function(request, fs, dataurl, callback){
+  var self = this;
+  var writeStream = fs.createWriteStream(self.writePath);
+
+  var file = request(dataurl).pipe(writeStream);
+
+
+  file.on('finish', function(){
+    fs.readFile(self.writePath, function(err, data){
+      if(err) res.json(err);
+      var dataJson = JSON.parse( data.toString() );
+      callback(dataJson);
+    });
+    
+  })
 };
 
 module.exports = LiveData;

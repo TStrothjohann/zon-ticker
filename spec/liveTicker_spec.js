@@ -333,7 +333,7 @@ describe("liveTicker", function() {
         expect(data.teams[0].letterCode).not.toBe(undefined);
         expect(data.teams[0].twitter).not.toBe(undefined);
       };
-      var teamData = new LiveData(request, teamDataURL, callback);
+      var teamData = new LiveData(request, fileSystem, teamDataURL, callback);
     });
   })
 

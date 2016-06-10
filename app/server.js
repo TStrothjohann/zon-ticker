@@ -109,7 +109,7 @@ app.get("/live-data", function(req, res) {
   };
   var teamCallback = function(data) {
     teamHash = data;
-    var liveDataObject = new LiveData(request, liveDataUrl, callback);
+    var liveDataObject = new LiveData(request, fs, liveDataUrl, callback);
   };
   new TeamData(fs, request, teamDataUrl, teamCallback);
 
