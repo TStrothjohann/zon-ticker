@@ -107,6 +107,23 @@ describe("liveTicker", function() {
       expect(ticker.data.games[0].statusText).toEqual("65'");
     });
 
+    it("it should show Halbzeit in statusText when Halbzeit", function() {
+      testLiveData.fixture[3].status = "HALF-TIME";
+      var gameStart = Date.now() - 1000*60*45;
+      var gameStartString = new Date(gameStart).toLocaleString();
+
+      testLiveData.fixture[3].date = gameStart;
+
+      testLiveData.fixture[3].teamHome.score = {"total":"5","period1":"2"};
+      testLiveData.fixture[3].teamAway.score = {"total":"3","period1":"0"};      
+      testLiveData.fixture[3].kickOff = { "periodStart1": gameStartString };
+
+      ticker = new Ticker(testLiveData, teamHash);
+      ticker.sortGames();
+      ticker.statusText();
+      expect(ticker.data.games[0].statusText).toEqual("Halbzeit");
+    });
+
     it("it should handle other lively states", function() {
       testLiveData.fixture[3].status = "LIVE";
       testLiveData.fixture[7].status = "HALF-TIME";

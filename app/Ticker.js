@@ -9,9 +9,9 @@ function Ticker(liveData, teamHash){
   this.data.liveLink = "http://www.zeit.de/sport/em-liveticker-2016";
   this.liveStates = {
     "LIVE": "LIVE",
-    "HALF-TIME": "LIVE",
-    "HALF-EXTRATIME": "LIVE",
-    "PENALTY-SHOOTOUT": "LIVE"      
+    "HALF-TIME": "Halbzeit",
+    "HALF-EXTRATIME": "Halbzeit Verlängerung",
+    "PENALTY-SHOOTOUT": "Elfmeterschießen"      
   };
   this.offStates = {
     "WITHDRAWN": "abgesetzt",
@@ -189,7 +189,11 @@ Ticker.prototype.statusText = function(callback){
         if (minutes-45 > 0) {
           dateString = "45' + " + String(minutes-45);
         }else{
-          dateString = String(minutes) + "'"; 
+          if(status !== "LIVE"){
+            dateString = this.liveStates[status];
+          }else{
+            dateString = String(minutes) + "'"; 
+          }
         }
       }else{
         var now = Date.now();
