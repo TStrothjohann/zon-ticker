@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="http://localhost:3000/css/flag-icon-min.css">
         <!-- <link rel="stylesheet" type="text/css" href="http://localhost:3000/css/em-module.css"> -->
         <link rel="stylesheet" type="text/css" href="http://live0.zeit.de/sport-ticker/css/em-module.css">
-        
+
     </head>
     <body class="dev">
         <section class="page__content">
@@ -28,24 +28,24 @@
                   <article class="teaser-ticker" data-type="teaser">
                     <a href="{{liveLink}}">
                       <!-- Team left: -->
-                      <div class="em-hp-live__team-left {{games[0].status}}">
-                        <span class="flag-icon {{games[0].status}} {{games[0].teamHome.flag}}"></span>
-                        <span class="em-hp-live__team-name {{games[0].status}}" >{{games[0].teamHome.countrycode}}</span>
+                      <div class="em-hp-live__team-left {{games[0].statusClass}}">
+                        <span class="flag-icon {{games[0].statusClass}} {{games[0].teamHome.flag}}"></span>
+                        <span class="em-hp-live__team-name {{games[0].statusClass}}" >{{games[0].teamHome.countrycode}}</span>
                       </div>
                       
                       <!-- Score -->
-                      <span class="em-hp-live__score {{games[0].status}}">
+                      <span class="em-hp-live__score {{games[0].statusClass}}">
                       {{games[0].teamHome.score.total}} : {{games[0].teamAway.score.total}}
                       </span>
                       
                       <!-- Team right -->
-                      <div class="em-hp-live__team-right {{games[0].status}}">
-                        <span class="flag-icon {{games[0].status}} {{games[0].teamAway.flag}}"></span>
-                        <span class="em-hp-live__team-name {{games[0].status}}">{{games[0].teamAway.countrycode}}</span>
+                      <div class="em-hp-live__team-right {{games[0].statusClass}}">
+                        <span class="flag-icon {{games[0].statusClass}} {{games[0].teamAway.flag}}"></span>
+                        <span class="em-hp-live__team-name {{games[0].statusClass}}">{{games[0].teamAway.countrycode}}</span>
                       </div>
 
                       <!-- Time / Status / Final-Score -->
-                      <span class="em-hp-live__module-status {{games[0].status}}">{{games[0].statusText}}</span>
+                      <span class="em-hp-live__module-status {{games[0].statusClass}}">{{games[0].statusText}}</span>
                     </a>
                   </article>                       
 
@@ -53,7 +53,7 @@
 
             </div>
           </div>
-          <script type="text/javascript">var dataURL = "http://localhost:3000/ticker-data3"</script>
+          <script type="text/javascript">var dataURL = "http://localhost:3000/live-data"</script>
           <script type="text/javascript" src="http://localhost:3000/js/em-hp-module.js"></script>
 
         </section>

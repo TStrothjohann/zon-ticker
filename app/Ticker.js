@@ -232,6 +232,9 @@ Ticker.prototype.statusText = function(callback){
     }
 
     this.data.games[i].statusText = dateString;
+  }
+  if( !this.isLive(this.data.games[0].status) ){
+    this.data.games[0].statusClass = "LIVE";
   }  
   if(callback){
     callback()

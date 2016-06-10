@@ -20,7 +20,7 @@ var poll = function(urlToPoll) {
           teaserContainer.appendChild(node);
         }
       }
-      tickerArticle[0].classList.add(jsondata.games[0].status);    
+      tickerArticle[0].classList.add(jsondata.games[0].statusClass);    
       markup = tickerDiv.innerHTML;
     }
   }
