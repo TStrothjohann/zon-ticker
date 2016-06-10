@@ -76,7 +76,7 @@ app.get("/ticker-data2", function(req, res) {
 app.get("/ticker-data3", function(req, res) {
   var data = TestData.live3;
   data.fixture[2].status = "LIVE";
-  data.fixture[3].status = "LIVE";
+  data.fixture[3].status = "FULL";
   for (var i = 0; i < data.fixture.length; i++) {
     var randomScoreHome = Math.floor((Math.random() * 10) + 1);
     var randomScoreAway = Math.floor((Math.random() * 10) + 1);

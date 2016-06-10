@@ -1,8 +1,8 @@
 var markup;
+var dataURL;
 
-var poll = function() {
+var poll = function(urlToPoll) {
   var data = {};
-  
   var prepareMarkup = function(jsondata){
     if(!tickerDiv){
       var tickerDiv = document.getElementById('em-ticker');
@@ -26,7 +26,7 @@ var poll = function() {
   }
 
   var HTTPrequest = new XMLHttpRequest();
-  HTTPrequest.open('GET', 'http://52.58.6.8:3000/ticker-data3', true);
+  HTTPrequest.open('GET', urlToPoll, true);
 
   HTTPrequest.onload = function() {
     if (HTTPrequest.status >= 200 && HTTPrequest.status < 400) {
@@ -40,7 +40,7 @@ var poll = function() {
         document.getElementById('em-ticker').innerHTML = findAndReplaceHandleBars(markupToMessWith, data);
       }
     } else {
-      // We reached our target server, but it returned an error
+        console.log("server error");
     }
   };
 
@@ -76,9 +76,11 @@ var poll = function() {
   }
 };
 
-poll();
-// setInterval(function(){
-//  poll();
-//  console.log("polled");
-// }, 10000);
+if(!dataURL || dataURL === ""){
+  dataURL = "http://52.58.6.8:3000/live-data"
+}
+poll(dataURL);
+setInterval(function(){
+ poll(dataURL);
+}, 10000);
 

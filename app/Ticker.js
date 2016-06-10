@@ -6,7 +6,7 @@ function Ticker(liveData, teamHash){
   this.data = {};
   this.data.round = liveData.round;
   this.data.moreLink = "http://www.zeit.de/thema/fussball-em";
-  this.data.liveLink = "http://www.zeit.de/em-ticker";
+  this.data.liveLink = "http://www.zeit.de/sport/em-liveticker-2016";
   this.liveStates = {
     "LIVE": "LIVE",
     "HALF-TIME": "LIVE",

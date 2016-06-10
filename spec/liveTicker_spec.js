@@ -131,7 +131,7 @@ describe("liveTicker", function() {
     ticker = new Ticker(testLiveData, teamHash);
     ticker.sortGamesAndReplaceNames(mockResponse);
     expect(mockResponse.json).toHaveBeenCalled();
-    expect(mockJsonData.games[3].statusText).toContain('morgen, ');
+    expect(mockJsonData.games[4].statusText).toContain('morgen, ');
   });
 
   it("serves the newest score counts", function(){
@@ -220,7 +220,7 @@ describe("liveTicker", function() {
         var apiPath = base_url + "ticker-data";
         request.get(apiPath, function(error, response, body) {
           var parsedBody = JSON.parse(body);
-          expect( parsedBody.games[0].statusText ).toEqual( "morgen, 21:00 Uhr" );
+          expect( parsedBody.games[0].statusText ).toEqual( "heute, 21:00 Uhr" );
           done();
         });
       });
