@@ -2,7 +2,20 @@ function LiveData(request, fs, url, callback){
   this.writePath = "./app/cache/live.json";
   this.liveData = {};
   this.teamData = {};
-  this.refreshLiveData(request, fs, url, callback);
+  var self = this;
+
+  fs.stat(self.writePath, function(err, stats){
+    if(err) return false;
+    var lastModified = new Date(stats.mtime);
+    if(lastModified > Date.now() - 1000*10){
+      console.log("getting Data from cache.")
+      //self.getDataFromCache(fs, writePath, callback);
+    }else{
+      console.log("getting data from server.")
+      self.refreshLiveData(request, fs, url, callback);
+    }
+  })
+  
 }
 
 LiveData.prototype.refreshLiveData = function(request, fs, dataurl, callback){
