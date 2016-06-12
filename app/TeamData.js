@@ -3,12 +3,19 @@ function TeamData(fs, request, teamDataUrl, callback) {
   var writeStream = fs.createWriteStream(writePath);
   var file = request(teamDataUrl).pipe(writeStream);
   var self = this;
-  file.on('finish', function () {
+  var error;
+  
+  file.on('close', function () {
     fs.readFile(writePath, function(err, data){
-      if(err) res.json(err);
-      var teamDataJson = JSON.parse( data.toString() );
-      var hash = self.convertTeamData(teamDataJson);
-      callback( hash );
+      if(err){ 
+        console.log("error TeamData.js: ", err);
+        error = {'Fehler': 'Teamdaten konnten nicht aktualisiert werden.'};
+        callback(error, data);
+      }else{
+        var teamDataJson = JSON.parse( data.toString() );
+        var hash = self.convertTeamData(teamDataJson);
+        callback(error, hash);
+      }
     });
   });
 }

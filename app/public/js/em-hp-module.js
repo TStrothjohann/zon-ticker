@@ -1,5 +1,6 @@
 var markup;
 var dataURL;
+var delay = 10000;
 
 var poll = function(urlToPoll) {
   var data = {};
@@ -38,14 +39,24 @@ var poll = function(urlToPoll) {
       if(data !== {} && markup){
         var markupToMessWith = markup;
         document.getElementById('em-ticker').innerHTML = findAndReplaceHandleBars(markupToMessWith, data);
+      }else{
+        document.getElementById('em-ticker').innerHTML = "";
       }
     } else {
+        document.getElementById('em-ticker').innerHTML = "";
         console.log("server error");
     }
   };
 
   HTTPrequest.onerror = function() {
+    document.getElementById('em-ticker').innerHTML = "";
     console.log("There was a connection error of some sort");
+    delay = delay + 10000;
+    clearInterval(interval);
+    setInterval(function(){
+      poll(dataURL);
+    }, delay)
+    console.log("Pol interval set to ", delay);
   };
 
   HTTPrequest.send();
@@ -79,8 +90,9 @@ var poll = function(urlToPoll) {
 if(!dataURL || dataURL === ""){
   dataURL = "http://52.58.6.8:3000/live-data"
 }
+
 poll(dataURL);
-setInterval(function(){
+var interval = setInterval(function(){
  poll(dataURL);
-}, 10000);
+}, delay);
 

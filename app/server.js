@@ -103,17 +103,37 @@ app.get("/ticker-data3", function(req, res) {
 
 
 app.get("/live-data", function(req, res) {
-  var callback = function(data){
-    ticker = new Ticker(data, teamHash);
-    ticker.sortGamesAndReplaceNames(res);
+  var callback = function(error, data){
+    if(!error){
+      console.log("Got the data: ", data);
+      console.log("And the teamHash is...", teamHash);
+      ticker = new Ticker(data, teamHash);
+      ticker.sortGamesAndReplaceNames(res);
+    }else{
+      console.log("Verbindungsproblem");
+      //res.json({'Fehler':'Verbindungsproblem.'});
+      res.end(); 
+    }
   };
-  var teamCallback = function(data) {
-    teamHash = data;
-    var liveDataObject = new LiveData(request, liveDataUrl, callback);
+  var teamCallback = function(error, data) {
+    if(!error){
+      console.log("got the team data. going to get live data...", data);
+      teamHash = data;
+      var liveDataObject = new LiveData(request, liveDataUrl, callback);
+    }else{
+      console.log("Verbindungsproblem");
+      //res.json({'Fehler':'Verbindungsproblem.'});
+      res.end();      
+    }
   };
   new TeamData(fs, request, teamDataUrl, teamCallback);
 
 });
+
+app.get("/stream", function(req,res){
+  var teamJson = fs.createReadStream('./app/cache/team.json');
+  teamJson.pipe(res);
+})
 
 app.get("/team-data", function(req, res) {
   var callback = function(data) {
