@@ -21,7 +21,7 @@ TeamData.prototype.getDataFromServer = function(fs, request, teamDataUrl, writeP
   var file = request(teamDataUrl).pipe(writeStream);
   var self = this;
 
-  file.on('finish', function () {
+  file.on('close', function () {
     fs.readFile(writePath, function(err, data){
       if(err) console.log(err);
       var teamDataJson = JSON.parse( data.toString() );
