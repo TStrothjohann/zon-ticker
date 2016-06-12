@@ -25,7 +25,7 @@ LiveData.prototype.refreshLiveData = function(request, fs, dataurl, callback){
   var file = request(dataurl).pipe(writeStream);
 
 
-  file.on('finish', function(){
+  file.on('close', function(){
     fs.readFile(self.writePath, function(err, data){
       if(err){
         console.log(self.writePath, err);
