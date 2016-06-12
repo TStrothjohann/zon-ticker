@@ -23,7 +23,7 @@ TeamData.prototype.getDataFromServer = function(fs, request, teamDataUrl, writeP
 
   file.on('finish', function () {
     fs.readFile(writePath, function(err, data){
-      if(err) res.json(err);
+      if(err) console.log(err);
       var teamDataJson = JSON.parse( data.toString() );
       var hash = self.convertTeamData(teamDataJson);
       callback( hash );
@@ -34,7 +34,7 @@ TeamData.prototype.getDataFromServer = function(fs, request, teamDataUrl, writeP
 TeamData.prototype.getDataFromCache = function(fs, writePath, callback){
   var self = this;
   fs.readFile(writePath, function(err, data){
-    if(err) res.json(err);
+    if(err) console.log(err);
     var teamDataJson = JSON.parse( data.toString() );
     var hash = self.convertTeamData(teamDataJson);
     callback( hash );

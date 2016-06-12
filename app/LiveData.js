@@ -9,7 +9,7 @@ function LiveData(request, fs, url, callback){
     var lastModified = new Date(stats.mtime);
     if(lastModified > Date.now() - 1000*10){
       console.log("getting Data from cache.", self.writePath);
-      self.getDataFromCache(fs, self.writePath, callback);
+      self.getDataFromCache(request, fs, self.writePath, url, callback);
     }else{
       console.log("getting data from server.")
       self.refreshLiveData(request, fs, url, callback);
@@ -27,7 +27,9 @@ LiveData.prototype.refreshLiveData = function(request, fs, dataurl, callback){
 
   file.on('finish', function(){
     fs.readFile(self.writePath, function(err, data){
-      if(err) res.json(err);
+      if(err){
+        console.log(self.writePath, err);
+      }
       var dataJson = JSON.parse( data.toString() );
       callback(dataJson);
     });
@@ -35,9 +37,12 @@ LiveData.prototype.refreshLiveData = function(request, fs, dataurl, callback){
   })
 };
 
-LiveData.prototype.getDataFromCache = function(fs, writePath, callback){
+LiveData.prototype.getDataFromCache = function(request, fs, writePath, dataurl, callback){
+  var self = this;
   fs.readFile(writePath, function(err, data){
-    if(err) res.json(err);
+    if(err){
+      self.refreshLiveData(request, fs, dataurl, callback)
+    }
     var dataJson = JSON.parse( data.toString() );
     callback(dataJson);
   }); 
