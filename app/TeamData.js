@@ -6,10 +6,10 @@ function TeamData(fs, request, teamDataUrl, callback) {
     if(err) return false;
     var lastModified = new Date(stats.mtime);
     if(lastModified > Date.now() - 1000*60*60*24){
-      console.log("getting Data from cache.")
+      console.log("getting Team Data from cache.")
       self.getDataFromCache(fs, writePath, callback);
     }else{
-      console.log("getting data from server.")
+      console.log("getting Team data from server.")
       self.getDataFromServer(fs, request, teamDataUrl, writePath, callback);
     }
   })
