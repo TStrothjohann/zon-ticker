@@ -314,7 +314,7 @@ describe("liveTicker", function() {
 
   describe("get real data", function(){
     it("serves live data", function(done){
-      var apiPath = base_url + "live-data";
+      var apiPath = base_url + "live-data-legacy";
       request.get(apiPath, function(error, response, body) {
         var parsedBody = JSON.parse(body);
         expect( parsedBody.games[0].statusText ).not.toBe(undefined);

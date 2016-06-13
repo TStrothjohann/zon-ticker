@@ -10,7 +10,6 @@ var TestData = new testData();
 var testTeamData = TestData.team;
 var testLiveData = TestData.live;
 var testTeamHash = convertTeamData(testTeamData);
-
 var liveDataUrl = "http://live0.zeit.de/fussball_em/feed/s2016/md3/dpa/onl1.json";
 var teamDataUrl = "http://live0.zeit.de/fussball_em/feed/s2016/config/de/dpa/teams.json";
 var ticker;
@@ -102,7 +101,7 @@ app.get("/ticker-data3", function(req, res) {
 });
 
 
-app.get("/live-data", function(req, res) {
+app.get("/live-data-legacy", function(req, res) {
   var callback = function(error, data){
     if(!error){
       console.log("Got the data: ", data);
@@ -142,5 +141,42 @@ app.get("/team-data", function(req, res) {
   }
   new TeamData(fs, request, teamDataUrl, callback);
 });
+
+
+var writeLiveJSON = function(){
+  var finalCallback = function(liveTickerData){
+    var livePath = "./app/public/live.json";
+    var readStream = new Buffer(JSON.stringify(liveTickerData) );
+
+    fs.writeFile(livePath, readStream, function (err) {
+      if (err) return console.log(err);
+    });
+  };
+  var callback = function(error, data){
+    if(!error){
+      console.log("Got the data: ", data);
+      console.log("And the teamHash is...", teamHash);
+      ticker = new Ticker(data, teamHash);
+      var response = false;
+      ticker.sortGamesAndReplaceNames(response, finalCallback);
+
+    }else{
+      console.log("Verbindungsproblem LiveData");
+    }
+  };
+  var teamCallback = function(error, data) {
+    if(!error){
+      console.log("got the team data. going to get live data...", data);
+      teamHash = data;
+      var liveDataObject = new LiveData(request, liveDataUrl, callback);
+    }else{
+      console.log("Verbindungsproblem TeamData");
+     
+    }
+  };
+  new TeamData(fs, request, teamDataUrl, teamCallback);  
+};
+
+setInterval(writeLiveJSON, 10000);
 
 app.listen(3000);

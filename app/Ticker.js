@@ -25,7 +25,7 @@ function Ticker(liveData, teamHash){
   };
 }
 
-Ticker.prototype.sortGamesAndReplaceNames = function(response){
+Ticker.prototype.sortGamesAndReplaceNames = function(response, finalCallback){
   var self = this;
   var callback = function(){
     self.teamNames(callbackNames);
@@ -39,7 +39,13 @@ Ticker.prototype.sortGamesAndReplaceNames = function(response){
   }
   var callbackStatus = function(){
     self.scores();
-    response.json(self.data);
+    if(response){
+      response.json(self.data);
+    }else{
+      if(finalCallback){
+        finalCallback(self.data); 
+      }
+    }
   }
 
   this.sortGames(callback);
