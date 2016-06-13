@@ -110,7 +110,7 @@ app.get("/live-data", function(req, res) {
       ticker = new Ticker(data, teamHash);
       ticker.sortGamesAndReplaceNames(res);
     }else{
-      console.log("Verbindungsproblem");
+      console.log("Verbindungsproblem LiveData");
       //res.json({'Fehler':'Verbindungsproblem.'});
       res.end(); 
     }
@@ -121,7 +121,7 @@ app.get("/live-data", function(req, res) {
       teamHash = data;
       var liveDataObject = new LiveData(request, liveDataUrl, callback);
     }else{
-      console.log("Verbindungsproblem");
+      console.log("Verbindungsproblem TeamData");
       //res.json({'Fehler':'Verbindungsproblem.'});
       res.end();      
     }
