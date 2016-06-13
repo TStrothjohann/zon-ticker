@@ -74,7 +74,7 @@ app.get("/ticker-data2", function(req, res) {
 
 app.get("/ticker-data3", function(req, res) {
   var data = TestData.live3;
-  data.fixture[2].status = "LIVE";
+  data.fixture[2].status = "HALF-TIME";
   data.fixture[3].status = "FULL";
   for (var i = 0; i < data.fixture.length; i++) {
     var randomScoreHome = Math.floor((Math.random() * 10) + 1);
@@ -84,15 +84,13 @@ app.get("/ticker-data3", function(req, res) {
     data.fixture[i].teamAway.score.total = randomScoreAway;
     data.fixture[i].teamAway.score.period1 = randomScoreAway;
 
-    if(data.fixture[i].status === 'LIVE'){
-      var randomGameDuration = Math.floor((Math.random() * 94) + 1);
+    if(data.fixture[i].status === 'HALF-TIME'){
+      var randomGameDuration = 51;
       var gameStart = Date.now() - 1000*60*randomGameDuration;
       var gameStartString = new Date(gameStart).toLocaleString();
-      var secondHalfStart = gameStart + (45+3+20)*60*1000;
-      var secondHalfStartString = new Date(secondHalfStart).toLocaleString();
 
       data.fixture[i].date = gameStart;
-      data.fixture[i].kickOff = { "periodStart1": gameStartString, "periodStart2": secondHalfStartString}
+      data.fixture[i].kickOff = { "periodStart1": gameStartString };
     }
   }
 
@@ -177,6 +175,6 @@ var writeLiveJSON = function(){
   new TeamData(fs, request, teamDataUrl, teamCallback);  
 };
 
-setInterval(writeLiveJSON, 10000);
+setInterval(writeLiveJSON, 20000);
 
 app.listen(3000);

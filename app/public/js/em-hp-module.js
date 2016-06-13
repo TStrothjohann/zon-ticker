@@ -1,10 +1,12 @@
 var markup;
 var dataURL;
-var delay = 10000;
+var delay = 30000;
 
 var poll = function(urlToPoll) {
   var data = {};
+
   var prepareMarkup = function(jsondata){
+    if(jsondata.)
     if(!tickerDiv){
       var tickerDiv = document.getElementById('em-ticker');
       var tickerArticle = tickerDiv.getElementsByTagName('article');
@@ -40,10 +42,9 @@ var poll = function(urlToPoll) {
         var markupToMessWith = markup;
         document.getElementById('em-ticker').innerHTML = findAndReplaceHandleBars(markupToMessWith, data);
       }else{
-        document.getElementById('em-ticker').innerHTML = "";
+        cosnsole.log("connection");
       }
     } else {
-        document.getElementById('em-ticker').innerHTML = "";
         console.log("server error");
     }
   };
@@ -88,7 +89,7 @@ var poll = function(urlToPoll) {
 };
 
 if(!dataURL || dataURL === ""){
-  dataURL = "http://52.58.6.8:3000/live-data"
+  dataURL = "http://live0.zeit.de/em-2016/live.json";
 }
 
 poll(dataURL);

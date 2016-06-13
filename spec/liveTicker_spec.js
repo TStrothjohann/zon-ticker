@@ -241,7 +241,21 @@ describe("liveTicker", function() {
     expect(ticker.data.games[last].statusClass).toEqual("LIVE");
     expect(ticker.data.games[last].status).toEqual("FULL");
   });
-  //Test für verlegt fehlt verlegt: Datum
+
+  it("gets Half-Time right in feed", function(){
+    var gameStart = Date.now() - 1000*60*55;
+    var gameStartString = new Date(gameStart).toLocaleString();
+    testLiveData.fixture[0].status = "HALF-TIME";
+    testLiveData.fixture[0].date = gameStart;
+    testLiveData.fixture[0].kickOff = { "periodStart1": gameStartString };
+    var finalCallback = function(liveTickerData){
+      expect(liveTickerData.games[0].statusText).toEqual("Halbzeit");
+    };
+    
+    ticker = new Ticker(testLiveData, teamHash);
+    var response = false;
+    ticker.sortGamesAndReplaceNames(response, finalCallback);
+  });
 
 
   describe("Server", function() {
@@ -325,6 +339,18 @@ describe("liveTicker", function() {
       });
     });
     
+    it("serves static live.json file", function(done){
+      var apiPath = base_url + "live.json";
+      request.get(apiPath, function(error, response, body) {
+        var parsedBody = JSON.parse(body);
+        expect( parsedBody.games[0].statusText ).not.toBe(undefined);
+        expect( parsedBody.games[0].date ).not.toBe(undefined);
+        expect( parsedBody.games[0].status ).not.toBe(undefined);
+        expect( parsedBody.round ).not.toBe(undefined);
+        done();
+      });
+    });
+
     it("serves team data", function(){
       var teamDataURL = "http://live0.zeit.de/fussball_em/feed/s2016/config/de/dpa/teams.json";
       var callback = function(data){

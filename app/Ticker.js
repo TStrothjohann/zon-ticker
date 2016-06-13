@@ -192,7 +192,7 @@ Ticker.prototype.statusText = function(callback){
         var start = new Date(this.data.games[i].kickOff.periodStart1);
         var elapsed = now - start;
         minutes = Math.floor(elapsed / 1000 / 60);
-        if (minutes-45 > 0) {
+        if (minutes-45 > 0 && status !== "HALF-TIME") {
           dateString = "45' + " + String(minutes-45);
         }else{
           if(status !== "LIVE"){
