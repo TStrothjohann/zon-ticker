@@ -102,24 +102,22 @@ app.get("/ticker-data3", function(req, res) {
 app.get("/live-data-legacy", function(req, res) {
   var callback = function(error, data){
     if(!error){
-      console.log("Got the data: ", data);
-      console.log("And the teamHash is...", teamHash);
+      console.log("Got the data: ");
+      console.log("And the teamHash is...");
       ticker = new Ticker(data, teamHash);
       ticker.sortGamesAndReplaceNames(res);
     }else{
       console.log("Verbindungsproblem LiveData");
-      //res.json({'Fehler':'Verbindungsproblem.'});
       res.end(); 
     }
   };
   var teamCallback = function(error, data) {
     if(!error){
-      console.log("got the team data. going to get live data...", data);
+      console.log("got the team data. going to get live data...");
       teamHash = data;
       var liveDataObject = new LiveData(request, liveDataUrl, callback);
     }else{
       console.log("Verbindungsproblem TeamData");
-      //res.json({'Fehler':'Verbindungsproblem.'});
       res.end();      
     }
   };
@@ -152,8 +150,6 @@ var writeLiveJSON = function(){
   };
   var callback = function(error, data){
     if(!error){
-      console.log("Got the data: ", data);
-      console.log("And the teamHash is...", teamHash);
       ticker = new Ticker(data, teamHash);
       var response = false;
       ticker.sortGamesAndReplaceNames(response, finalCallback);
@@ -164,12 +160,10 @@ var writeLiveJSON = function(){
   };
   var teamCallback = function(error, data) {
     if(!error){
-      console.log("got the team data. going to get live data...", data);
       teamHash = data;
       var liveDataObject = new LiveData(request, liveDataUrl, callback);
     }else{
       console.log("Verbindungsproblem TeamData");
-     
     }
   };
   new TeamData(fs, request, teamDataUrl, teamCallback);  
