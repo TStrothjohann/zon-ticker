@@ -38,14 +38,19 @@ Ticker.prototype.sortGamesAndReplaceNames = function(response, finalCallback){
     self.statusText(callbackStatus);
   }
   var callbackStatus = function(){
-    self.scores();
+    self.scores(callbackForStyle);
+  }
+  var callbackForStyle = function(){
+    self.styleLogic(callbackEnd);
+  }
+  var callbackEnd = function(){
     if(response){
       response.json(self.data);
     }else{
       if(finalCallback){
         finalCallback(self.data); 
       }
-    }
+    }    
   }
 
   this.sortGames(callback);
@@ -196,17 +201,22 @@ Ticker.prototype.statusText = function(callback){
           dateString = "45' + " + String(minutes-45);
         }else{
           if(status !== "LIVE"){
+            //Halbzeit
             dateString = this.liveStates[status];
           }else{
             dateString = String(minutes) + "'"; 
           }
         }
-      }else{
+      }else if(periods.length === 2){
+        //Zweite Halbzeit
         var now = Date.now();
         var start = new Date(this.data.games[i].kickOff[ periods[current] ]);
         var elapsed = Math.floor((now - start)/1000/60);
+
         minutes = (current*45) + elapsed; 
         dateString = String(minutes) + "'";
+      }else{
+        dateString = this.liveStates[status];
       }
       this.data.games[i].statusClass = "LIVE";
     }
@@ -220,40 +230,73 @@ Ticker.prototype.statusText = function(callback){
       var now = Date.now();
       var start = new Date(this.data.games[i].kickOff[ periods[current] ]);
 
-      if( (now - start)/1000/60 > 90 ){
-        dateString = "";
-        dateString += this.data.games[i].teamHome.score.total;
-        dateString += ":";
-        dateString += this.data.games[i].teamAway.score.total;
-        dateString += " (";
-        dateString += this.data.games[i].teamHome.score.period1;
-        dateString += ":";
-        dateString += this.data.games[i].teamAway.score.period1;
-        dateString += ")";
-        this.data.games[i].statusClass = "FULL";
-      }else{
-        dateString = "beendet";
-        this.data.games[i].statusClass = "LIVE";
-      }
+      dateString = "";
+      dateString += this.data.games[i].teamHome.score.total;
+      dateString += ":";
+      dateString += this.data.games[i].teamAway.score.total;
+      dateString += " (";
+      dateString += this.data.games[i].teamHome.score.period1;
+      dateString += ":";
+      dateString += this.data.games[i].teamAway.score.period1;
+      dateString += ")";
+      this.data.games[i].statusClass = "FULL";
     }
 
     this.data.games[i].statusText = dateString;
   }
-  if( !this.isLive(this.data.games[0].status) ){
-    this.data.games[0].statusClass = "LIVE";
-  }  
+
   if(callback){
     callback()
   };
 };
 
-Ticker.prototype.scores = function() {
+Ticker.prototype.scores = function(callback) {
   for (var i = 0; i < this.data.games.length; i++) {
     if(!this.data.games[i].teamHome.score.total){
       this.data.games[i].teamHome.score.total = '-';
       this.data.games[i].teamAway.score.total = '-';
     }
+  }
+  if(callback){
+    callback();
   }  
+};
+
+Ticker.prototype.styleLogic = function(callback){
+  var Live = 0;
+  var Full = 0;
+  var PreMatch = 0;
+  var count = this.data.games.length;
+
+  for (var i = 0; i < count; i++) {
+    switch(this.data.games[i].statusClass){
+      case "PRE-MATCH":
+        PreMatch++;
+        break;
+      case "LIVE":
+        Live++;
+        break;
+      case "FULL":
+        Full++;
+        break
+    }
+
+  }
+
+  //Das letzte, wenn keins Live und alle Full
+  if(Live === 0 && Full === count ){
+    var last = count - 1;
+    this.data.games[last].statusClass = "LIVE";
+  }
+
+  //Das erste, wenn keins live und nicht alle full?
+  if(Live === 0 && Full < count){
+    this.data.games[0].statusClass = "LIVE";
+  }
+
+  if(callback){
+    callback();
+  }
 };
 
 module.exports = Ticker;
