@@ -285,6 +285,8 @@ Ticker.prototype.styleLogic = function(callback){
 
   //Das letzte, wenn keins Live und alle Full
   if(count === 2){
+    this.data.games[0].status = "LIVE";
+    this.data.games[1].status = "LIVE";
     this.data.games[0].statusClass = "LIVE";
     this.data.games[1].statusClass = "LIVE";
   }
