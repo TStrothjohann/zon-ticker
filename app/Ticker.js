@@ -284,11 +284,10 @@ Ticker.prototype.styleLogic = function(callback){
   }
 
   //Das letzte, wenn keins Live und alle Full
-  if(count === 2){
-    this.data.games[0].status = "LIVE";
-    this.data.games[1].status = "LIVE";
-    this.data.games[0].statusClass = "LIVE";
-    this.data.games[1].statusClass = "LIVE";
+  if(count <= 2){
+    for (var i = 0; i < this.data.games.length; i++) {
+      this.data.games[i].statusClass = "LIVE";
+    }
   }
 
   if(Live === 0 && Full === count ){

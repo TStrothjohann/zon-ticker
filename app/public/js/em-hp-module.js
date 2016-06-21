@@ -1,12 +1,9 @@
 var markup;
 var dataURL;
-var delay = 30000;
 
 var poll = function(urlToPoll) {
   var data = {};
-
   var prepareMarkup = function(jsondata){
-    if(jsondata.)
     if(!tickerDiv){
       var tickerDiv = document.getElementById('em-ticker');
       var tickerArticle = tickerDiv.getElementsByTagName('article');
@@ -15,7 +12,7 @@ var poll = function(urlToPoll) {
       for (var i = 0; i < jsondata.games.length; i++) {
         var regex = /[0]/g;
         var node = tickerArticle[0].cloneNode(true);
-        node.classList.add(jsondata.games[i].status);
+        node.classList.add(jsondata.games[i].statusClass);
         var string = node.innerHTML;
         string = string.replace(regex, i)
         node.innerHTML = string;
@@ -41,8 +38,6 @@ var poll = function(urlToPoll) {
       if(data !== {} && markup){
         var markupToMessWith = markup;
         document.getElementById('em-ticker').innerHTML = findAndReplaceHandleBars(markupToMessWith, data);
-      }else{
-        cosnsole.log("connection");
       }
     } else {
         console.log("server error");
@@ -50,14 +45,7 @@ var poll = function(urlToPoll) {
   };
 
   HTTPrequest.onerror = function() {
-    document.getElementById('em-ticker').innerHTML = "";
     console.log("There was a connection error of some sort");
-    delay = delay + 10000;
-    clearInterval(interval);
-    setInterval(function(){
-      poll(dataURL);
-    }, delay)
-    console.log("Pol interval set to ", delay);
   };
 
   HTTPrequest.send();
@@ -91,9 +79,7 @@ var poll = function(urlToPoll) {
 if(!dataURL || dataURL === ""){
   dataURL = "http://live0.zeit.de/em-2016/live.json";
 }
-
 poll(dataURL);
-var interval = setInterval(function(){
- poll(dataURL);
-}, delay);
-
+setInterval(function(){
+poll(dataURL);
+}, 30000);
