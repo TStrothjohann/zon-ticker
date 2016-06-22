@@ -291,8 +291,12 @@ Ticker.prototype.styleLogic = function(callback){
   }
 
   if(Live === 0 && Full === count ){
+    var newOrderedGames = [];
     var last = count - 1;
     this.data.games[last].statusClass = "LIVE";
+    var toBeFirst = this.data.games.splice(last, 1);
+    newOrderedGames.push(toBeFirst);
+    this.data.games = newOrderedGames.concat(this.data.games);
   }
 
   //Das erste, wenn keins live und nicht alle full?
