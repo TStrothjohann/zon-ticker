@@ -294,8 +294,7 @@ Ticker.prototype.styleLogic = function(callback){
     var newOrderedGames = [];
     var last = count - 1;
     this.data.games[last].statusClass = "LIVE";
-    var toBeFirst = this.data.games.splice(last, 1);
-    newOrderedGames.push(toBeFirst);
+    newOrderedGames = this.data.games.splice(last, 1);
     this.data.games = newOrderedGames.concat(this.data.games);
   }
 
