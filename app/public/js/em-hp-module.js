@@ -10,11 +10,12 @@ var poll = function(urlToPoll) {
       var teaserContainer = tickerDiv.getElementsByClassName("sport-ticker--container")[0];
 
       for (var i = 0; i < jsondata.games.length; i++) {
-        var regex = /[0]/g;
+        var regex = /\[0\]/g;
         var node = tickerArticle[0].cloneNode(true);
         node.classList.add(jsondata.games[i].statusClass);
         var string = node.innerHTML;
-        string = string.replace(regex, i)
+        var iteratorString = "[" + i + "]";
+        string = string.replace(regex, iteratorString);
         node.innerHTML = string;
         if(i !== 0){
           teaserContainer.appendChild(node);
